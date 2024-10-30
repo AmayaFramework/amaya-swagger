@@ -1,2 +1,3 @@
 rootProject.name = 'amaya-swagger'
+include 'models'
 
