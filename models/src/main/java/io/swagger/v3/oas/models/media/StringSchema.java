@@ -1,7 +1,6 @@
 package io.swagger.v3.oas.models.media;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * StringSchema

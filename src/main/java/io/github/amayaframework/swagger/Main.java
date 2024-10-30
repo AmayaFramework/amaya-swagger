@@ -28,16 +28,6 @@ public class Main {
         });
     }
 
-    interface ApiSerializer {
-
-        void serialize(OpenAPI api, OutputStream ous);
-    }
-
-    interface ApiDeserializer {
-
-        OpenAPI deserialize(InputStream is);
-    }
-
     static void writeToRsp(String name, OutputStream os) throws IOException {
         System.out.println("GETTING " + name);
         var rsc = Main.class.getResourceAsStream(name);
@@ -47,5 +37,15 @@ public class Main {
         }
         rsc.transferTo(os);
         rsc.close();
+    }
+
+    interface ApiSerializer {
+
+        void serialize(OpenAPI api, OutputStream ous);
+    }
+
+    interface ApiDeserializer {
+
+        OpenAPI deserialize(InputStream is);
     }
 }

@@ -2,7 +2,6 @@ package io.swagger.v3.oas.models.media;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * NumberSchema

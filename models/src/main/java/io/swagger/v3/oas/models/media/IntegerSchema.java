@@ -1,7 +1,6 @@
 package io.swagger.v3.oas.models.media;
 
 import java.text.NumberFormat;
-import java.util.Objects;
 
 /**
  * IntegerSchema

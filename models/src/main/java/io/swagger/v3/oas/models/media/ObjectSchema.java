@@ -1,7 +1,5 @@
 package io.swagger.v3.oas.models.media;
 
-import java.util.Objects;
-
 /**
  * ObjectSchema
  */

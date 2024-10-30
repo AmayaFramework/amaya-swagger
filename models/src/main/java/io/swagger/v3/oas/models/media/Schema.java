@@ -507,6 +507,7 @@ public class Schema<T> {
     /*
     INTERNAL MEMBERS @OpenAPI31
      */
+
     /**
      * @since 2.2.8 (OpenAPI 3.1.0)
      */
