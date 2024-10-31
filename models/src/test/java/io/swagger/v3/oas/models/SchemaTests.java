@@ -14,20 +14,20 @@ import static org.junit.jupiter.api.Assertions.fail;
 public final class SchemaTests {
 
     @Test
-    public void AdditionalPropertiesBoolean(){
+    public void AdditionalPropertiesBoolean() {
         var schemas = new HashMap<String, Schema>();
 
         schemas.put("StringSchema", new StringSchema()
-                        .description("simple string schema")
-                        .minLength(3)
-                        .maxLength(100)
-                        .example("it works")
-                        .additionalProperties(true)
-                );
+                .description("simple string schema")
+                .minLength(3)
+                .maxLength(100)
+                .example("it works")
+                .additionalProperties(true)
+        );
     }
 
     @Test
-    public void AdditionalPropertiesSchema(){
+    public void AdditionalPropertiesSchema() {
         var schemas = new HashMap<String, Schema>();
 
         schemas.put("IntegerSchema", new IntegerSchema()

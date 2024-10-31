@@ -1,3 +1,6 @@
+/**
+ * Repackaged swagger models library.
+ */
 open module io.swagger.v3.oas.models {
     // Exports
     exports io.swagger.v3.oas.models;
