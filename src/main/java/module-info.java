@@ -1,6 +1,6 @@
 module io.github.amayaframework.swagger {
     // TODO
-    requires io.swagger.v3.oas.models;
+    requires static io.swagger.v3.oas.models;
     // Imports
     requires io.github.amayaframework.core;
     requires io.github.amayaframework.web;

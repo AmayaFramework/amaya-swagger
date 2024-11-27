@@ -1,4 +1,5 @@
 rootProject.name = 'amaya-swagger'
 include 'models'
 include 'openapi-ui-bundle'
+include 'swagger-ui-bundle'
 
