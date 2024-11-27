@@ -18,7 +18,7 @@ final class Util {
     static String getIndex() throws IOException {
         var stream = getInputStream(Util.INDEX);
         try (stream; var reader = new BufferedReader(new InputStreamReader(stream))) {
-            return reader.lines().reduce("", (l, r) -> l + "\n" + r);
+            return reader.readLine().strip();
         }
     }
 }
