@@ -15,7 +15,7 @@ java {
 }
 
 group = 'io.github.amayaframework'
-archivesBaseName = 'amaya-open-ui'
+archivesBaseName = 'open-ui-bundle'
 version = System.getenv('OPEN_UI_VERSION') ?: '1.0.0'
 
 repositories {
