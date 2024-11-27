@@ -6,15 +6,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 final class Util {
-    static final String PACKAGE = "io/github/amayaframework/swaggerui/";
-    static final ClassLoader LOADER = Util.class.getClassLoader();
     static final String INDEX = "index.html";
 
     private Util() {
     }
 
     static InputStream getInputStream(String resource) {
-        return LOADER.getResourceAsStream(PACKAGE + resource);
+        return Util.class.getResourceAsStream(resource);
     }
 
     static String getIndex() throws IOException {
