@@ -1,35 +1,35 @@
 package io.github.amayaframework.openui;
 
-import java.net.URL;
+import java.net.URI;
 import java.util.Objects;
 
 /**
  * A class representing a reference to the OpenAPI manifest. Contains the url and name of the manifest.
  */
 public final class ApiEntry {
-    private final URL url;
+    private final URI uri;
     private final String name;
 
     /**
-     * Constructs a {@link ApiEntry} instance with given url and name.
+     * Constructs a {@link ApiEntry} instance with given uri and name.
      *
-     * @param url  the specified url
+     * @param uri  the specified url
      * @param name the specified name
      */
-    public ApiEntry(URL url, String name) {
-        this.url = Objects.requireNonNull(url);
+    public ApiEntry(URI uri, String name) {
+        this.uri = Objects.requireNonNull(uri);
         this.name = Objects.requireNonNull(name);
     }
 
     /**
-     * Creates a {@link ApiEntry} instance with given url and name.
+     * Creates a {@link ApiEntry} instance with given uri and name.
      *
-     * @param url  the specified url
+     * @param uri  the specified uri
      * @param name the specified name
      * @return the {@link ApiEntry} instance
      */
-    public static ApiEntry of(URL url, String name) {
-        return new ApiEntry(url, name);
+    public static ApiEntry of(URI uri, String name) {
+        return new ApiEntry(uri, name);
     }
 
     /**
@@ -42,16 +42,16 @@ public final class ApiEntry {
     }
 
     /**
-     * Gets the api url.
+     * Gets the api uri.
      *
-     * @return the api url
+     * @return the api uri
      */
-    public URL getURL() {
-        return url;
+    public URI getURI() {
+        return uri;
     }
 
     @Override
     public String toString() {
-        return url + ":" + name;
+        return uri + ":" + name;
     }
 }

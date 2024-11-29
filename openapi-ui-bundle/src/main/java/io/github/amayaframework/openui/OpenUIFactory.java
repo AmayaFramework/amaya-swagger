@@ -1,6 +1,6 @@
 package io.github.amayaframework.openui;
 
-import java.net.URL;
+import java.net.URI;
 
 /**
  * An interface describing an abstract {@link OpenUI} factory.
@@ -8,12 +8,12 @@ import java.net.URL;
 public interface OpenUIFactory {
 
     /**
-     * Creates an {@link OpenUI} instance with given url.
+     * Creates an {@link OpenUI} instance with given uri.
      *
-     * @param url the specified url of the open api manifest.
+     * @param uri the specified url of the open api manifest.
      * @return the {@link OpenUI} instance
      */
-    OpenUI create(URL url);
+    OpenUI create(URI uri);
 
     /**
      * Creates an {@link OpenUI} instance with given {@link ApiEntry}.
