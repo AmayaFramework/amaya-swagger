@@ -22,14 +22,14 @@ final class FormatUtil {
     }
 
     static String setUrlEntry(String index, ApiEntry entry) {
-        var value = getUrlEntry(entry.getURL().toString(), entry.getName());
+        var value = getUrlEntry(entry.getURI().toString(), entry.getName());
         return index.replace(REPLACE_TEMPLATE, "urls:[" + value + "]");
     }
 
     static String setUrls(String index, ApiEntry... entries) {
         var builder = new StringBuilder("urls:[");
         for (var entry : entries) {
-            var item = getUrlEntry(entry.getURL().toString(), entry.getName());
+            var item = getUrlEntry(entry.getURI().toString(), entry.getName());
             builder.append(item);
             builder.append(',');
         }
@@ -40,7 +40,7 @@ final class FormatUtil {
     static String setUrls(String index, Iterable<ApiEntry> entries) {
         var builder = new StringBuilder("urls:[");
         for (var entry : entries) {
-            var item = getUrlEntry(entry.getURL().toString(), entry.getName());
+            var item = getUrlEntry(entry.getURI().toString(), entry.getName());
             builder.append(item);
             builder.append(',');
         }

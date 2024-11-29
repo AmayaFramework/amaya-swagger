@@ -5,7 +5,7 @@ import io.github.amayaframework.openui.OpenUI;
 import io.github.amayaframework.openui.OpenUIFactory;
 
 import java.io.IOException;
-import java.net.URL;
+import java.net.URI;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
@@ -34,11 +34,11 @@ public final class SwaggerUIFactory implements OpenUIFactory {
     }
 
     @Override
-    public OpenUI create(URL url) {
-        Objects.requireNonNull(url);
+    public OpenUI create(URI uri) {
+        Objects.requireNonNull(uri);
         try {
             var index = Util.getIndex();
-            index = FormatUtil.setUrl(index, url.toString());
+            index = FormatUtil.setUrl(index, uri.toString());
             var buffer = index.getBytes(charset);
             return new SwaggerUI(buffer);
         } catch (IOException e) {
