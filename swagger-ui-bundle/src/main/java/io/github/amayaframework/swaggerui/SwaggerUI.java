@@ -4,6 +4,7 @@ import io.github.amayaframework.openui.OpenUI;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.net.URI;
 import java.util.Set;
 
 final class SwaggerUI implements OpenUI {
@@ -18,15 +19,22 @@ final class SwaggerUI implements OpenUI {
             "swagger-ui-standalone-preset.js"
     );
 
+    private final URI root;
     private final byte[] indexBuffer;
 
-    SwaggerUI(byte[] indexBuffer) {
+    SwaggerUI(URI root, byte[] indexBuffer) {
+        this.root = root;
         this.indexBuffer = indexBuffer;
     }
 
     @Override
     public String getIndex() {
         return Util.INDEX;
+    }
+
+    @Override
+    public URI getRoot() {
+        return root;
     }
 
     @Override
