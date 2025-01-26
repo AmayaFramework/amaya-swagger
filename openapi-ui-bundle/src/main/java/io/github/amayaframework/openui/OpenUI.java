@@ -1,6 +1,7 @@
 package io.github.amayaframework.openui;
 
 import java.io.InputStream;
+import java.net.URI;
 
 /**
  * An interface describing an abstract bundle containing parts of the web interface for the Open API.
@@ -13,6 +14,13 @@ public interface OpenUI {
      * @return the name of index page
      */
     String getIndex();
+
+    /**
+     * Gets the static root.
+     *
+     * @return the uri containing static root
+     */
+    URI getRoot();
 
     /**
      * Gets an {@link Iterable} instance containing names of all bundle parts.
