@@ -29,9 +29,10 @@ dependencies {
     // Dependencies
     implementation group: 'io.github.amayaframework', name: 'swagger-ui-bundle', version: '1.0.4'
     implementation group: 'io.github.amayaframework', name: 'open-ui-bundle', version: '1.0.2'
-    api group: 'io.github.amayaframework', name: 'amaya-core', version: '2.0.0'
+    api group: 'io.github.amayaframework', name: 'amaya-core', version: '2.0.2'
     api group: 'io.github.amayaframework', name: 'amaya-jetty', version: '1.0.0'
     api group: 'io.swagger.core.v3', name: 'swagger-models', version: '2.2.25'
+    compileOnly group: 'io.github.amayaframework', name: 'amaya-di', version: '2.3.1'
 }
 
 test {
