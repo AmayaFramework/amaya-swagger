@@ -16,7 +16,6 @@ import java.util.Map;
 final class SwaggerHandler implements Runnable2<HttpContext, Runnable1<HttpContext>> {
     // Mime type solver and cached types
     final MimeTyper typer;
-    final MimeData yamlData;
     final MimeData htmlData;
     // Path data: root prefix, swagger path, etc
     final String root;
@@ -25,17 +24,16 @@ final class SwaggerHandler implements Runnable2<HttpContext, Runnable1<HttpConte
     // OpenUI data: open ui instance and open ui index page name
     final OpenUI ui;
     final String index;
-    // Open api manifests
-    final Map<String, Function0<InputStream>> manifests;
+    // Open api document providers
+    final Map<String, Function0<InputStream>> providers;
 
     SwaggerHandler(MimeTyper typer,
                    String root,
                    String swagger,
                    OpenUI ui,
-                   Map<String, Function0<InputStream>> manifests) {
+                   Map<String, Function0<InputStream>> providers) {
         // Typer
         this.typer = typer;
-        this.yamlData = typer.get("yaml");
         this.htmlData = typer.get("html");
         // Paths
         this.root = root;
@@ -44,8 +42,8 @@ final class SwaggerHandler implements Runnable2<HttpContext, Runnable1<HttpConte
         // Open UI
         this.ui = ui;
         this.index = ui.getIndex();
-        // Manifests
-        this.manifests = manifests;
+        // Document providers
+        this.providers = providers;
     }
 
     private static String getExtension(String file) {
@@ -64,15 +62,19 @@ final class SwaggerHandler implements Runnable2<HttpContext, Runnable1<HttpConte
         }
     }
 
-    private void sendYaml(HttpResponse response, Function0<InputStream> provider) throws Throwable {
+    private void sendDocument(HttpResponse response, String extension, Function0<InputStream> provider)
+            throws Throwable {
         try (var stream = provider.invoke()) {
             response.setStatus(HttpCode.OK);
-            response.setMimeData(yamlData);
+            var data = typer.get(extension);
+            if (data != null) {
+                response.setMimeData(data);
+            }
             stream.transferTo(response.getOutputStream());
         }
     }
 
-    private void sendFile(HttpResponse response, String file) throws IOException {
+    private void sendStaticFile(HttpResponse response, String file) throws IOException {
         try (var stream = ui.getInputStream(file)) {
             if (stream == null) {
                 response.sendError(HttpCode.NOT_FOUND, "File " + file + " not found");
@@ -105,17 +107,14 @@ final class SwaggerHandler implements Runnable2<HttpContext, Runnable1<HttpConte
             return;
         }
         var tail = path.substring(rootLength + 1);
-        if (tail.isEmpty()) {
-            context.getResponse().sendError(HttpCode.NOT_FOUND, "Empty filename");
-            return;
-        }
         // Check if there are open api file with such path
-        var manifest = manifests.get(tail);
-        if (manifest != null) {
-            sendYaml(context.getResponse(), manifest);
+        var provider = providers.get(tail);
+        if (provider != null) {
+            var extension = getExtension(tail);
+            sendDocument(context.getResponse(), extension, provider);
             return;
         }
         // Try to lookup for static part
-        sendFile(context.getResponse(), tail);
+        sendStaticFile(context.getResponse(), tail);
     }
 }
