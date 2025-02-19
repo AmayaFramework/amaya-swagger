@@ -16,6 +16,7 @@ final class MapMimeTyper implements MimeTyper {
     private static final MimeData JPEG_DATA = new MimeData(MimeType.JPEG);
     private static final MimeData PNG_DATA = new MimeData(MimeType.PNG);
     private static final MimeData GIF_DATA = new MimeData(MimeType.GIF);
+
     private static final Map<String, MimeData> TYPES = Map.of(
             "yaml", YAML_DATA,
             "xml", XML_DATA,

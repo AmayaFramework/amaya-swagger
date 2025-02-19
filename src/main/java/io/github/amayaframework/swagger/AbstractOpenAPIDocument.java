@@ -3,10 +3,10 @@ package io.github.amayaframework.swagger;
 import java.net.URI;
 
 public abstract class AbstractOpenAPIDocument implements OpenAPIDocument {
-    protected final String title;
     protected final URI path;
+    protected final String title;
 
-    protected AbstractOpenAPIDocument(String title, URI path) {
+    protected AbstractOpenAPIDocument(URI path, String title) {
         this.title = title;
         this.path = path;
     }

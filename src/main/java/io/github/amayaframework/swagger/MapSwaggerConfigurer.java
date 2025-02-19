@@ -13,7 +13,7 @@ import java.io.InputStream;
 import java.net.URI;
 import java.util.*;
 
-public final class MapSwaggerConfigurer implements SwaggerConfigurer {
+final class MapSwaggerConfigurer implements SwaggerConfigurer {
     // Immutable fields
     private final OpenUIFactory factory;
     private final MimeTyper defaultTyper;
@@ -167,7 +167,6 @@ public final class MapSwaggerConfigurer implements SwaggerConfigurer {
         }
         var entries = new LinkedList<ApiEntry>();
         var providers = new HashMap<String, Function0<InputStream>>();
-        // Split documents by locals and remotes
         for (var document : documents.values()) {
             var uri = document.getPath();
             var title = document.getTitle();
