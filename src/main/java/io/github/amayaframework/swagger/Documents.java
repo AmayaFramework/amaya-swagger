@@ -13,17 +13,18 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
 /**
- *
+ * The utility class containing methods that allow to create various implementations of {@link OpenAPIDocument}.
  */
 public final class Documents {
     private Documents() {
     }
 
     /**
+     * Creates an {@link OpenAPIDocument} instance from given url to outer resource and document name.
      *
-     * @param url
-     * @param name
-     * @return
+     * @param url  the specified document url, must be non-null
+     * @param name the specified document name, may be null
+     * @return the {@link OpenAPIDocument} instance
      */
     public static OpenAPIDocument of(URL url, String name) {
         try {
@@ -34,19 +35,21 @@ public final class Documents {
     }
 
     /**
+     * Creates an {@link OpenAPIDocument} instance from given url to outer resource.
      *
-     * @param url
-     * @return
+     * @param url the specified document url, must be non-null
+     * @return the {@link OpenAPIDocument} instance
      */
     public static OpenAPIDocument of(URL url) {
         return of(url, null);
     }
 
     /**
+     * Creates an {@link OpenAPIDocument} instance from given {@link Path} and document name.
      *
-     * @param path
-     * @param name
-     * @return
+     * @param path the specified {@link Path} to document file
+     * @param name the specified document name, may be null
+     * @return the {@link OpenAPIDocument} instance
      */
     public static OpenAPIDocument of(Path path, String name) {
         if (Files.notExists(path) || Files.isDirectory(path)) {
@@ -59,19 +62,21 @@ public final class Documents {
     }
 
     /**
+     * Creates an {@link OpenAPIDocument} instance from given {@link Path}.
      *
-     * @param path
-     * @return
+     * @param path the specified {@link Path} to document file
+     * @return the {@link OpenAPIDocument} instance
      */
     public static OpenAPIDocument of(Path path) {
         return of(path, null);
     }
 
     /**
+     * Creates an {@link OpenAPIDocument} instance from given {@link File} and document name.
      *
-     * @param file
-     * @param name
-     * @return
+     * @param file the specified {@link File} instance, pointing to document file
+     * @param name the specified document name, may be null
+     * @return the {@link OpenAPIDocument} instance
      */
     public static OpenAPIDocument of(File file, String name) {
         if (!file.isFile()) {
@@ -84,39 +89,43 @@ public final class Documents {
     }
 
     /**
+     * Creates an {@link OpenAPIDocument} instance from given {@link File}.
      *
-     * @param file
-     * @return
+     * @param file the specified {@link File} instance, pointing to document file
+     * @return the {@link OpenAPIDocument} instance
      */
     public static OpenAPIDocument of(File file) {
         return of(file, null);
     }
 
     /**
+     * Creates an {@link OpenAPIDocument} instance from given path string and document name.
      *
-     * @param path
-     * @param name
-     * @return
+     * @param path the specified path string, must be non-null
+     * @param name the specified document name, may be null
+     * @return the {@link OpenAPIDocument} instance
      */
     public static OpenAPIDocument of(String path, String name) {
         return of(Path.of(path), name);
     }
 
     /**
+     * Creates an {@link OpenAPIDocument} instance from given path string.
      *
-     * @param path
-     * @return
+     * @param path the specified path string, must be non-null
+     * @return the {@link OpenAPIDocument} instance
      */
     public static OpenAPIDocument of(String path) {
         return of(Path.of(path), null);
     }
 
     /**
+     * Creates an {@link OpenAPIDocument} instance from given {@link Class}, resource string and document name.
      *
-     * @param clazz
-     * @param resource
-     * @param name
-     * @return
+     * @param clazz    the specified {@link Class} instance, must be non-null
+     * @param resource the specified resource string, must be non-null
+     * @param name     the specified document name, may be null
+     * @return the {@link OpenAPIDocument} instance
      */
     public static OpenAPIDocument of(Class<?> clazz, String resource, String name) {
         var found = clazz.getResource(resource);
@@ -128,10 +137,11 @@ public final class Documents {
     }
 
     /**
+     * Creates an {@link OpenAPIDocument} instance from given {@link Class} and resource string.
      *
-     * @param clazz
-     * @param resource
-     * @return
+     * @param clazz    the specified {@link Class} instance, must be non-null
+     * @param resource the specified resource string, must be non-null
+     * @return the {@link OpenAPIDocument} instance
      */
     public static OpenAPIDocument of(Class<?> clazz, String resource) {
         return of(clazz, resource, null);
