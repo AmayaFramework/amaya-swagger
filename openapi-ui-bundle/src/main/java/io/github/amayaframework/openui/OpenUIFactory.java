@@ -17,29 +17,29 @@ public interface OpenUIFactory {
     OpenUI create(URI root, URI uri);
 
     /**
-     * Creates an {@link OpenUI} instance with given {@link ApiEntry}.
+     * Creates an {@link OpenUI} instance with given {@link OpenApiEntry}.
      *
      * @param root  the specified uri of the static root
-     * @param entry the specified {@link ApiEntry} instance
+     * @param entry the specified {@link OpenApiEntry} instance
      * @return the {@link OpenUI} instance
      */
-    OpenUI create(URI root, ApiEntry entry);
+    OpenUI create(URI root, OpenApiEntry entry);
 
     /**
-     * Creates an {@link OpenUI} instance with given array of {@link ApiEntry}.
+     * Creates an {@link OpenUI} instance with given array of {@link OpenApiEntry}.
      *
      * @param root    the specified uri of the static root
-     * @param entries the array containing specified {@link ApiEntry} instances
+     * @param entries the array containing specified {@link OpenApiEntry} instances
      * @return the {@link OpenUI} instance
      */
-    OpenUI create(URI root, ApiEntry... entries);
+    OpenUI create(URI root, OpenApiEntry... entries);
 
     /**
-     * Creates an {@link OpenUI} instance with given {@link Iterable} of {@link ApiEntry}.
+     * Creates an {@link OpenUI} instance with given {@link Iterable} of {@link OpenApiEntry}.
      *
      * @param root    the specified uri of the static root
-     * @param entries the {@link Iterable} containing specified {@link ApiEntry} instances
+     * @param entries the {@link Iterable} containing specified {@link OpenApiEntry} instances
      * @return the {@link OpenUI} instance
      */
-    OpenUI create(URI root, Iterable<ApiEntry> entries);
+    OpenUI create(URI root, Iterable<OpenApiEntry> entries);
 }

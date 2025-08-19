@@ -1,6 +1,6 @@
 /**
- * Amaya Open UI Module.
+ * TODO
  */
-module io.github.amayaframework.openui {
+module amayaframework.openui {
     exports io.github.amayaframework.openui;
 }

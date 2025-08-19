@@ -13,21 +13,21 @@ public interface OpenUI {
      *
      * @return the name of index page
      */
-    String getIndex();
+    String index();
 
     /**
      * Gets the static root.
      *
      * @return the uri containing static root
      */
-    URI getRoot();
+    URI root();
 
     /**
      * Gets an {@link Iterable} instance containing names of all bundle parts.
      *
      * @return an {@link Iterable} instance containing names of all bundle parts
      */
-    Iterable<String> getParts();
+    Iterable<String> parts();
 
     /**
      * Gets {@link InputStream} for the specified bundle part.
@@ -35,5 +35,5 @@ public interface OpenUI {
      * @param part the name of the bundle part
      * @return the {@link InputStream} instance
      */
-    InputStream getInputStream(String part);
+    InputStream inputStream(String part);
 }

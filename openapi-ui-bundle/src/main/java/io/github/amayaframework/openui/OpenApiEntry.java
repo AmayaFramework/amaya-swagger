@@ -6,30 +6,30 @@ import java.util.Objects;
 /**
  * A class representing a reference to the OpenAPI manifest. Contains the url and name of the manifest.
  */
-public final class ApiEntry {
+public final class OpenApiEntry {
     private final URI uri;
     private final String name;
 
     /**
-     * Constructs a {@link ApiEntry} instance with given uri and name.
+     * Constructs a {@link OpenApiEntry} instance with given uri and name.
      *
      * @param uri  the specified url
      * @param name the specified name
      */
-    public ApiEntry(URI uri, String name) {
+    public OpenApiEntry(URI uri, String name) {
         this.uri = Objects.requireNonNull(uri);
         this.name = Objects.requireNonNull(name);
     }
 
     /**
-     * Creates a {@link ApiEntry} instance with given uri and name.
+     * Creates a {@link OpenApiEntry} instance with given uri and name.
      *
      * @param uri  the specified uri
      * @param name the specified name
-     * @return the {@link ApiEntry} instance
+     * @return the {@link OpenApiEntry} instance
      */
-    public static ApiEntry of(URI uri, String name) {
-        return new ApiEntry(uri, name);
+    public static OpenApiEntry of(URI uri, String name) {
+        return new OpenApiEntry(uri, name);
     }
 
     /**
