@@ -9,9 +9,9 @@ import java.util.Map;
 final class SwaggerUI implements OpenUI {
     private final URI root;
     private final Map<String, Part> parts;
-    private final BufferPart index;
+    private final Part index;
 
-    SwaggerUI(URI root, Map<String, Part> parts, BufferPart index) {
+    SwaggerUI(URI root, Map<String, Part> parts, Part index) {
         this.root = root;
         this.parts = parts;
         this.index = index;

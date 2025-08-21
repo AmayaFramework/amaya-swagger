@@ -15,6 +15,11 @@ final class BufferPart extends AbstractPart {
     }
 
     @Override
+    public String charset() {
+        return "utf-8";
+    }
+
+    @Override
     public InputStream inputStream() {
         return new ByteArrayInputStream(buffer);
     }

@@ -10,5 +10,7 @@ public interface Part {
 
     MimeType mimeType();
 
+    String charset();
+
     InputStream inputStream();
 }
