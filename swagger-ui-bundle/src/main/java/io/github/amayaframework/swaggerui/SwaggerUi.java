@@ -1,25 +1,17 @@
 package io.github.amayaframework.swaggerui;
 
-import io.github.amayaframework.openui.OpenUI;
+import io.github.amayaframework.openui.OpenUi;
 import io.github.amayaframework.openui.Part;
 
-import java.net.URI;
 import java.util.Map;
 
-final class SwaggerUI implements OpenUI {
-    private final URI root;
+final class SwaggerUi implements OpenUi {
     private final Map<String, Part> parts;
     private final Part index;
 
-    SwaggerUI(URI root, Map<String, Part> parts, Part index) {
-        this.root = root;
+    SwaggerUi(Map<String, Part> parts, Part index) {
         this.parts = parts;
         this.index = index;
-    }
-
-    @Override
-    public URI root() {
-        return root;
     }
 
     @Override

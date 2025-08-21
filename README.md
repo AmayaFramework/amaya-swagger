@@ -59,7 +59,7 @@ import io.github.amayaframework.core.WebBuilders;
 import io.github.amayaframework.jetty.JettyServerFactory;
 import io.github.amayaframework.swagger.SwaggerConfigurers;
 import io.github.amayaframework.swagger.Documents;
-import io.github.amayaframework.swaggerui.SwaggerUIFactory;
+import io.github.amayaframework.swaggerui.SwaggerUiFactory;
 
 import java.net.URL;
 

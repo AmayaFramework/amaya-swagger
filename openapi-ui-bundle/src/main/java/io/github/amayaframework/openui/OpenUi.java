@@ -1,10 +1,6 @@
 package io.github.amayaframework.openui;
 
-import java.net.URI;
-
-public interface OpenUI {
-
-    URI root();
+public interface OpenUi {
 
     Part index();
 

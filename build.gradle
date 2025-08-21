@@ -32,6 +32,8 @@ dependencies {
     // TODO Remove dep deps
     implementation group: 'io.github.amayaframework', name: 'amaya-core', version: '3.1.0'
     implementation group: 'io.github.amayaframework', name: 'amaya-tomcat', version: '2.1.0-10.1.44'
+    implementation project('openapi-ui-bundle')
+    implementation project('swagger-ui-bundle')
 }
 
 test {
