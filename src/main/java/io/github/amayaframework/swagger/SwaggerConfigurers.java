@@ -4,7 +4,7 @@
 //
 //import java.net.URI;
 //
-///**
+/// **
 // * A utility class for creating instances of {@link SwaggerConfigurer}.
 // */
 //public final class SwaggerConfigurers {

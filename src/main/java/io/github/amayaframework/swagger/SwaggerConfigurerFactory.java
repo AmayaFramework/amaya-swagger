@@ -4,7 +4,7 @@
 //
 //import java.net.URI;
 //
-///**
+/// **
 // * An interface describing an abstract {@link SwaggerConfigurer} factory.
 // */
 //public interface SwaggerConfigurerFactory {

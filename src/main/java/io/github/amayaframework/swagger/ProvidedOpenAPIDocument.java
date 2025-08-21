@@ -5,7 +5,7 @@
 //import java.io.InputStream;
 //import java.net.URI;
 //
-///**
+/// **
 // * The implementation of the {@link OpenAPIDocument} with the {@link InputStream} provider.
 // */
 //public final class ProvidedOpenAPIDocument extends AbstractOpenAPIDocument {

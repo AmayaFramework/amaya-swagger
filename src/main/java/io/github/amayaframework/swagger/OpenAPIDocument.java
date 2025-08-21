@@ -5,7 +5,7 @@
 //import java.io.InputStream;
 //import java.net.URI;
 //
-///**
+/// **
 // * An interface describing an abstract open api document entry.
 // */
 //public interface OpenAPIDocument {

@@ -1,39 +1,14 @@
 package io.github.amayaframework.openui;
 
-import java.io.InputStream;
 import java.net.URI;
 
-/**
- * An interface describing an abstract bundle containing parts of the web interface for the Open API.
- */
 public interface OpenUI {
 
-    /**
-     * Gets the name of index page.
-     *
-     * @return the name of index page
-     */
-    String index();
-
-    /**
-     * Gets the static root.
-     *
-     * @return the uri containing static root
-     */
     URI root();
 
-    /**
-     * Gets an {@link Iterable} instance containing names of all bundle parts.
-     *
-     * @return an {@link Iterable} instance containing names of all bundle parts
-     */
-    Iterable<String> parts();
+    Part index();
 
-    /**
-     * Gets {@link InputStream} for the specified bundle part.
-     *
-     * @param part the name of the bundle part
-     * @return the {@link InputStream} instance
-     */
-    InputStream inputStream(String part);
+    Part part(String name);
+
+    Iterable<Part> parts();
 }

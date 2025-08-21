@@ -1,55 +1,39 @@
 package io.github.amayaframework.swaggerui;
 
 import io.github.amayaframework.openui.OpenUI;
+import io.github.amayaframework.openui.Part;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.net.URI;
-import java.util.Set;
+import java.util.Map;
 
 final class SwaggerUI implements OpenUI {
-    private static final Set<String> PARTS = Set.of(
-            "favicon-16x16.png",
-            "favicon-32x32.png",
-            "index.css",
-            "index.html",
-            "oauth2-redirect.html",
-            "swagger-ui.css",
-            "swagger-ui-bundle.js",
-            "swagger-ui-standalone-preset.js"
-    );
-
     private final URI root;
-    private final byte[] indexBuffer;
+    private final Map<String, Part> parts;
+    private final BufferPart index;
 
-    SwaggerUI(URI root, byte[] indexBuffer) {
+    SwaggerUI(URI root, Map<String, Part> parts, BufferPart index) {
         this.root = root;
-        this.indexBuffer = indexBuffer;
+        this.parts = parts;
+        this.index = index;
     }
 
     @Override
-    public String getIndex() {
-        return Util.INDEX;
-    }
-
-    @Override
-    public URI getRoot() {
+    public URI root() {
         return root;
     }
 
     @Override
-    public Iterable<String> getParts() {
-        return PARTS;
+    public Part index() {
+        return index;
     }
 
     @Override
-    public InputStream getInputStream(String part) {
-        if (Util.INDEX.equals(part)) {
-            return new ByteArrayInputStream(indexBuffer);
-        }
-        if (!PARTS.contains(part)) {
-            return null;
-        }
-        return Util.getInputStream(part);
+    public Part part(String name) {
+        return parts.get(name);
+    }
+
+    @Override
+    public Iterable<Part> parts() {
+        return parts.values();
     }
 }

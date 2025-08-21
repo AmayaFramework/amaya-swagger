@@ -2,7 +2,7 @@
 //
 //import java.net.URI;
 //
-///**
+/// **
 // * The skeletal implementation of the {@link OpenAPIDocument}.
 // */
 //public abstract class AbstractOpenAPIDocument implements OpenAPIDocument {

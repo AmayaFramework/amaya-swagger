@@ -2,7 +2,7 @@
 //
 //import io.github.amayaframework.http.MimeData;
 //
-///**
+/// **
 // * An interface describing an abstract mime type solver.
 // */
 //public interface MimeTyper {

@@ -8,7 +8,7 @@
 //import java.net.URI;
 //import java.util.Collection;
 //
-///**
+/// **
 // * An interface describing an abstract swagger SPA configurator.
 // * It can be applied to {@link WebApplication} via
 // * {@link io.github.amayaframework.web.WebApplicationBuilder#configureApplication(Runnable1)}

@@ -1,9 +1,7 @@
-/**
- * Amaya Swagger UI Module.
- */
-module io.github.amayaframework.swaggerui {
+module amayaframework.swaggerui {
     // Imports
-    requires io.github.amayaframework.openui;
+    requires amayaframework.openui;
+    requires amayaframework.http;
     // Exports
     exports io.github.amayaframework.swaggerui;
 }

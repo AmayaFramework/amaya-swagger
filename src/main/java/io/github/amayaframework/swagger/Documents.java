@@ -12,7 +12,7 @@
 //import java.nio.file.Path;
 //import java.nio.file.StandardOpenOption;
 //
-///**
+/// **
 // * The utility class containing methods that allow to create various implementations of {@link OpenAPIDocument}.
 // */
 //public final class Documents {
