@@ -1,7 +1,7 @@
 package io.github.amayaframework.swagger;
 
-import com.github.romanqed.jconv.Task;
 import com.github.romanqed.jconv.TaskConsumer;
+import com.github.romanqed.jfunc.Exceptions;
 import com.github.romanqed.jsync.Futures;
 import io.github.amayaframework.context.HttpContext;
 import io.github.amayaframework.context.HttpRequest;
@@ -47,16 +47,6 @@ public abstract class AbstractSwaggerTask implements TaskConsumer<HttpContext> {
         }
     }
 
-    protected void sendPart(HttpRequest req, HttpResponse res, Part part) throws IOException {
-        var encoder = negotiator.negotiate(req.header(ACCEPT_ENCODING));
-        if (encoder == null) {
-            res.status(HttpCode.NOT_ACCEPTABLE);
-            res.contentLength(0);
-            return;
-        }
-        sendPart(res, encoder == IdentityEncoder.INSTANCE ? null : encoder, part);
-    }
-
     protected static CompletableFuture<Void> sendPartAsync(OutputStream stream, Part part) {
         return Futures.run(() -> {
             try (var inputStream = part.inputStream()) {
@@ -75,16 +65,6 @@ public abstract class AbstractSwaggerTask implements TaskConsumer<HttpContext> {
         return sendPartAsync(outputStream, part);
     }
 
-    protected CompletableFuture<Void> sendPartAsync(HttpRequest req, HttpResponse res, Part part) throws IOException {
-        var encoder = negotiator.negotiate(req.header(ACCEPT_ENCODING));
-        if (encoder == null) {
-            res.status(HttpCode.NOT_ACCEPTABLE);
-            res.contentLength(0);
-            return CompletableFuture.completedFuture(null);
-        }
-        return sendPartAsync(res, encoder == IdentityEncoder.INSTANCE ? null : encoder, part);
-    }
-
     protected static void redirect(HttpResponse res, String url) {
         if (res.httpVersion().before(HttpVersion.HTTP_1_1)) {
             res.status(HttpCode.MOVED_PERMANENTLY);
@@ -92,6 +72,31 @@ public abstract class AbstractSwaggerTask implements TaskConsumer<HttpContext> {
             res.status(HttpCode.PERMANENT_REDIRECT);
         }
         res.header(LOCATION, url);
+    }
+
+    protected void sendPart(HttpRequest req, HttpResponse res, Part part) throws IOException {
+        var encoder = negotiator.negotiate(req.header(ACCEPT_ENCODING));
+        if (encoder == null) {
+            res.status(HttpCode.NOT_ACCEPTABLE);
+            res.contentLength(0);
+            return;
+        }
+        sendPart(res, encoder == IdentityEncoder.INSTANCE ? null : encoder, part);
+    }
+
+    protected CompletableFuture<Void> sendPartAsync(HttpRequest req, HttpResponse res, Part part) {
+        var encoder = negotiator.negotiate(req.header(ACCEPT_ENCODING));
+        if (encoder == null) {
+            res.status(HttpCode.NOT_ACCEPTABLE);
+            res.contentLength(0);
+            return CompletableFuture.completedFuture(null);
+        }
+        try {
+            return sendPartAsync(res, encoder == IdentityEncoder.INSTANCE ? null : encoder, part);
+        } catch (IOException e) {
+            Exceptions.throwAny(e);
+            return null;
+        }
     }
 
     @Override

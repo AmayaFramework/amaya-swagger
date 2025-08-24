@@ -1,6 +1,7 @@
 package io.github.amayaframework.swagger;
 
 import com.github.romanqed.jconv.Task;
+import com.github.romanqed.jsync.Futures;
 import io.github.amayaframework.context.HttpContext;
 import io.github.amayaframework.http.HttpCode;
 import io.github.amayaframework.openui.Part;
@@ -29,28 +30,28 @@ public final class StandardSwaggerTask extends AbstractSwaggerTask {
         var req = context.request();
         var path = req.path();
         var length = path.length();
-        // 1. Путь короче корня - гарантированно НЕ КОРЕНЬ
-        // 2. Путь не начинается с корня - гарантированно НЕ КОРЕНЬ
+        // 1. Path shorter than root => definitely NOT ROOT
+        // 2. Path does not start with root => definitely NOT ROOT
         if (length < rootLength || !path.startsWith(root)) {
             next.run(context);
             return;
         }
-        // 3. Длины равны - это сам корень (с redirect в + /)
+        // 3. Lengths are equal => this is the root itself (with redirect to + /)
         if (length == rootLength) {
             redirect(context.response(), slashRoot);
             return;
         }
-        // 4. После корня идет НЕ / - это гарантированно НЕ КОРЕНЬ
+        // 4. Character after root is NOT '/' => definitely NOT ROOT
         if (path.charAt(rootLength) != '/') {
             next.run(context);
             return;
         }
-        // 5. После / ничего нет - это гарантированно САМ КОРЕНЬ (без redirect)
+        // 5. Nothing after '/' => definitely ROOT itself (no redirect)
         if (rootLength == length - 1) {
             sendPart(req, context.response(), index);
             return;
         }
-        // 6. Начинается с корня и есть хвост
+        // 6. Starts with root and has a tail
         var res = context.response();
         var tail = path.substring(rootLength + 1);
         var part = parts.get(tail);
@@ -62,8 +63,35 @@ public final class StandardSwaggerTask extends AbstractSwaggerTask {
     }
 
     @Override
-    public CompletableFuture<Void> runAsync(HttpContext context, Task<HttpContext> task) {
-        // TODO Implement async
-        return null;
+    public CompletableFuture<Void> runAsync(HttpContext context, Task<HttpContext> next) {
+        var req = context.request();
+        var path = req.path();
+        var length = path.length();
+        // 1. Path shorter than root => definitely NOT ROOT
+        // 2. Path does not start with root => definitely NOT ROOT
+        if (length < rootLength || !path.startsWith(root)) {
+            return next.runAsync(context);
+        }
+        // 3. Lengths are equal => this is the root itself (with redirect to + /)
+        if (length == rootLength) {
+            redirect(context.response(), slashRoot);
+            return CompletableFuture.completedFuture(null);
+        }
+        // 4. Character after root is NOT '/' => definitely NOT ROOT
+        if (path.charAt(rootLength) != '/') {
+            return next.runAsync(context);
+        }
+        // 5. Nothing after '/' => definitely ROOT itself (no redirect)
+        if (rootLength == length - 1) {
+            return sendPartAsync(req, context.response(), index);
+        }
+        // 6. Starts with root and has a tail
+        var res = context.response();
+        var tail = path.substring(rootLength + 1);
+        var part = parts.get(tail);
+        if (part == null) {
+            return Futures.run(() -> res.sendError(HttpCode.NOT_FOUND));
+        }
+        return sendPartAsync(req, res, part);
     }
 }
