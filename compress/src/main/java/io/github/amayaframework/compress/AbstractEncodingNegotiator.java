@@ -2,11 +2,20 @@ package io.github.amayaframework.compress;
 
 import java.util.Map;
 
+/**
+ *
+ */
 public abstract class AbstractEncodingNegotiator implements EncodingNegotiator {
     protected final EncodingManager manager;
     protected final EncodingHeaderParser parser;
     protected final Map<String, Float> priority;
 
+    /**
+     * TODO
+     * @param manager
+     * @param parser
+     * @param priority
+     */
     protected AbstractEncodingNegotiator(EncodingManager manager,
                                          EncodingHeaderParser parser,
                                          Map<String, Float> priority) {
@@ -15,10 +24,20 @@ public abstract class AbstractEncodingNegotiator implements EncodingNegotiator {
         this.priority = priority;
     }
 
+    /**
+     * TODO
+     * @param header
+     * @return
+     */
     protected Encoder select(String header) {
         return manager.select(parser.parse(header, priority));
     }
 
+    /**
+     * TODO
+     * @param header
+     * @return
+     */
     protected abstract Encoder lookup(String header);
 
     @Override

@@ -3,10 +3,20 @@ package io.github.amayaframework.compress;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * TODO
+ */
 public final class CachedEncodingNegotiator extends AbstractEncodingNegotiator {
     private final Map<String, EncoderHolder> cache;
     private final int cacheLimit;
 
+    /**
+     * TODO
+     * @param manager
+     * @param parser
+     * @param priority
+     * @param cacheLimit
+     */
     public CachedEncodingNegotiator(EncodingManager manager,
                                     EncodingHeaderParser parser,
                                     Map<String, Float> priority,

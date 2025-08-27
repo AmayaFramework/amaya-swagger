@@ -2,14 +2,26 @@ package io.github.amayaframework.compress;
 
 import java.util.Map;
 
+/**
+ * TODO
+ */
 public final class EncodingNegotiatorBuilder extends AbstractEncodingNegotiatorConfigurer<EncodingNegotiatorBuilder> {
+
+    /**
+     * TODO
+     */
     public static final int DEFAULT_CACHE_LIMIT = 32;
+
+    /**
+     * TODO
+     */
     public static final Map<String, Float> DEFAULT_PRIORITIES = Map.of(
             Encodings.BROTLI, 1.0f,
             Encodings.GZIP, 0.9f,
             Encodings.DEFLATE, 0.8f,
             Encodings.IDENTITY, 0.001f
     );
+
     private int cacheLimit = DEFAULT_CACHE_LIMIT;
 
     @Override
@@ -18,10 +30,19 @@ public final class EncodingNegotiatorBuilder extends AbstractEncodingNegotiatorC
         cacheLimit = DEFAULT_CACHE_LIMIT;
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public int cacheLimit() {
         return cacheLimit;
     }
 
+    /**
+     * TODO
+     * @param cacheLimit
+     * @return
+     */
     public EncodingNegotiatorBuilder cacheLimit(int cacheLimit) {
         this.cacheLimit = cacheLimit;
         return this;
@@ -40,6 +61,10 @@ public final class EncodingNegotiatorBuilder extends AbstractEncodingNegotiatorC
         }
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public EncodingNegotiator build() {
         var manager = this.manager == null ? new MapEncodingManager() : this.manager;
         manager.ensure(IdentityEncoder.INSTANCE);

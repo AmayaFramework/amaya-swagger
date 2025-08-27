@@ -2,8 +2,17 @@ package io.github.amayaframework.compress;
 
 import java.util.Map;
 
+/**
+ * TODO
+ */
 @FunctionalInterface
 public interface EncodingHeaderParser {
 
-    Iterable<String> parse(String header, Map<String, Float> priority);
+    /**
+     * TODO
+     * @param header
+     * @param priorities
+     * @return
+     */
+    Iterable<String> parse(String header, Map<String, Float> priorities);
 }

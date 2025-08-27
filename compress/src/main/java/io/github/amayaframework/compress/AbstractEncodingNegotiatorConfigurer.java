@@ -5,6 +5,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * TODO
+ * @param <C>
+ */
 public abstract class AbstractEncodingNegotiatorConfigurer<C extends EncodingNegotiatorConfigurer> implements EncodingNegotiatorConfigurer {
     protected EncodingHeaderParser parser;
     protected EncodingManager manager;
@@ -12,6 +16,9 @@ public abstract class AbstractEncodingNegotiatorConfigurer<C extends EncodingNeg
     protected Collection<Encoder> encodersView;
     protected Map<String, Float> priorities;
 
+    /**
+     * TODO
+     */
     protected void ensureEncoders() {
         if (encoders == null) {
             encoders = new HashMap<>();
@@ -19,12 +26,20 @@ public abstract class AbstractEncodingNegotiatorConfigurer<C extends EncodingNeg
         }
     }
 
+    /**
+     * TODO
+     */
     protected void ensurePriorities() {
         if (priorities == null) {
             priorities = new HashMap<>();
         }
     }
 
+    /**
+     * TODO
+     * @param encoding
+     * @param priority
+     */
     protected void setPriority(String encoding, Float priority) {
         if (priorities == null && priority == null) {
             return;

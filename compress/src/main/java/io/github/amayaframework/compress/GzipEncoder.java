@@ -4,14 +4,24 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.zip.GZIPOutputStream;
 
+/**
+ * TODO
+ */
 public final class GzipEncoder implements Encoder {
     public static final int DEFAULT_BUFFER_SIZE = 512;
     private final int bufferSize;
 
+    /**
+     * TODO
+     * @param bufferSize
+     */
     public GzipEncoder(int bufferSize) {
         this.bufferSize = bufferSize;
     }
 
+    /**
+     * TODO
+     */
     public GzipEncoder() {
         this(DEFAULT_BUFFER_SIZE);
     }

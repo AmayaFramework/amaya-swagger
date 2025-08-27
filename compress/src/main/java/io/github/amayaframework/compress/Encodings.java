@@ -1,5 +1,8 @@
 package io.github.amayaframework.compress;
 
+/**
+ * TODO
+ */
 public final class Encodings {
     private Encodings() {
     }

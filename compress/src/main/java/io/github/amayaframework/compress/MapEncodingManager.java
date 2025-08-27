@@ -4,13 +4,23 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
+/**
+ * TODO
+ */
 public final class MapEncodingManager implements EncodingManager {
     private final Map<String, Encoder> body;
 
+    /**
+     * TODO
+     * @param body
+     */
     public MapEncodingManager(Map<String, Encoder> body) {
         this.body = body;
     }
 
+    /**
+     * TODO
+     */
     public MapEncodingManager() {
         this.body = new HashMap<>();
     }

@@ -75,7 +75,7 @@ public final class SplitEncodingHeaderParser implements EncodingHeaderParser {
     }
 
     @Override
-    public Iterable<String> parse(String header, Map<String, Float> priority) {
+    public Iterable<String> parse(String header, Map<String, Float> priorities) {
         var iterable = tokenizer.tokenize(header, ",");
         var map = new HashMap<String, Float>();
         for (var value : iterable) {
@@ -90,8 +90,8 @@ public final class SplitEncodingHeaderParser implements EncodingHeaderParser {
         });
         ret.sort((l, r) -> {
             var cmp = map.get(r).compareTo(map.get(l));
-            if (cmp == 0 && priority != null) {
-                return priority.getOrDefault(r, 1f).compareTo(priority.getOrDefault(l, 1f));
+            if (cmp == 0 && priorities != null) {
+                return priorities.getOrDefault(r, 1f).compareTo(priorities.getOrDefault(l, 1f));
             }
             return cmp;
         });

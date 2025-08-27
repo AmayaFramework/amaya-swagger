@@ -2,7 +2,14 @@ package io.github.amayaframework.compress;
 
 import java.io.OutputStream;
 
+/**
+ * TODO
+ */
 public final class IdentityEncoder implements Encoder {
+
+    /**
+     * TODO
+     */
     public static final Encoder INSTANCE = new IdentityEncoder();
 
     private IdentityEncoder() {

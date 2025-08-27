@@ -1,5 +1,12 @@
+/**
+ * TODO
+ */
 module amayaframework.compress {
+    // Imports
+    // Tokenizer
     requires amayaframework.tokenize;
-    requires com.aayushatharva.brotli4j;
+    // Optional brotli dependency
+    requires static com.aayushatharva.brotli4j;
+    // Exports
     exports io.github.amayaframework.compress;
 }

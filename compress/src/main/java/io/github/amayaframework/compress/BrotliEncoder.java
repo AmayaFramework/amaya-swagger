@@ -7,24 +7,45 @@ import com.aayushatharva.brotli4j.encoder.Encoder.Parameters;
 import java.io.IOException;
 import java.io.OutputStream;
 
+/**
+ * TODO
+ */
 public final class BrotliEncoder implements Encoder {
     public static final int DEFAULT_BUFFER_SIZE = 16384;
     private final Parameters parameters;
     private final int bufferSize;
 
+    /**
+     * TODO
+     * @param parameters
+     * @param bufferSize
+     */
     public BrotliEncoder(Parameters parameters, int bufferSize) {
         this.parameters = parameters;
         this.bufferSize = bufferSize;
     }
 
+    /**
+     * TODO
+     * @param bufferSize
+     */
     public BrotliEncoder(int bufferSize) {
         this(new Parameters(), bufferSize);
     }
 
+    /**
+     * TODO
+     */
     public BrotliEncoder() {
         this(new Parameters(), DEFAULT_BUFFER_SIZE);
     }
 
+    /**
+     * TODO
+     * @param parameters
+     * @param bufferSize
+     * @return
+     */
     public static BrotliEncoder create(Parameters parameters, int bufferSize) {
         if (Brotli4jLoader.isAvailable()) {
             return new BrotliEncoder(parameters, bufferSize);
@@ -32,10 +53,19 @@ public final class BrotliEncoder implements Encoder {
         return null;
     }
 
+    /**
+     * TODO
+     * @param bufferSize
+     * @return
+     */
     public static BrotliEncoder create(int bufferSize) {
         return create(new Parameters(), bufferSize);
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public static BrotliEncoder create() {
         return create(new Parameters(), DEFAULT_BUFFER_SIZE);
     }
