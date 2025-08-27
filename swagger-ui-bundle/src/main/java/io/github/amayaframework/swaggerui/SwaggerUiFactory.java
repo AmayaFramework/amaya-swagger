@@ -12,6 +12,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * TODO
+ */
 public final class SwaggerUiFactory implements OpenUiFactory {
     private static final String UTF_8 = "utf-8";
     private static final String INIT = "init.js";
