@@ -2,10 +2,18 @@ package io.github.amayaframework.openui;
 
 import io.github.amayaframework.http.MimeType;
 
+/**
+ * TODO
+ */
 public abstract class AbstractPart implements Part {
     protected final String name;
     protected final MimeType type;
 
+    /**
+     * TODO
+     * @param name
+     * @param type
+     */
     protected AbstractPart(String name, MimeType type) {
         this.name = name;
         this.type = type;
