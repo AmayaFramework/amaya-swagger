@@ -26,7 +26,7 @@ public final class SplitEncodingHeaderParser implements EncodingHeaderParser {
         var flag = false;
         for (var i = 0; i < index; ++i) {
             var ch = param.charAt(i);
-            if (Character.isWhitespace(ch)) {
+            if (ch <= ' ') {
                 continue;
             }
             flag = ch == 'q';
