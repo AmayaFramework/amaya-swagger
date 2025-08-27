@@ -10,6 +10,9 @@ import io.github.amayaframework.openui.Part;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * TODO
+ */
 public final class StandardSwaggerTask extends AbstractSwaggerTask {
     private final Map<String, Part> parts;
     private final Part index;
@@ -17,6 +20,13 @@ public final class StandardSwaggerTask extends AbstractSwaggerTask {
     private final String slashRoot;
     private final int rootLength;
 
+    /**
+     * TODO
+     * @param parts
+     * @param index
+     * @param root
+     * @param negotiator
+     */
     public StandardSwaggerTask(Map<String, Part> parts, Part index, String root, EncodingNegotiator negotiator) {
         super(negotiator);
         this.parts = parts;

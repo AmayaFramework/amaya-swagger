@@ -10,11 +10,20 @@ import io.github.amayaframework.openui.Part;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * TODO
+ */
 public final class ExtendedSwaggerTask extends AbstractSwaggerTask {
     private final Map<String, Part> parts;
     private final String root;
     private final String slashRoot;
 
+    /**
+     * TODO
+     * @param parts
+     * @param root
+     * @param negotiator
+     */
     public ExtendedSwaggerTask(Map<String, Part> parts, String root, EncodingNegotiator negotiator) {
         super(negotiator);
         this.parts = parts;

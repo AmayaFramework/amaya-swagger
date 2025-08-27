@@ -10,10 +10,17 @@ import io.github.amayaframework.openui.Part;
 import java.util.*;
 import java.util.function.Consumer;
 
+/**
+ * TODO
+ */
 public final class SwaggerTaskBuilder extends AbstractSwaggerConfigurer<SwaggerTaskBuilder> {
     private final String defaultRoot;
     private EncodingNegotiatorBuilder builder;
 
+    /**
+     * TODO
+     * @param defaultRoot
+     */
     public SwaggerTaskBuilder(String defaultRoot) {
         this.defaultRoot = defaultRoot;
     }
@@ -170,6 +177,10 @@ public final class SwaggerTaskBuilder extends AbstractSwaggerConfigurer<SwaggerT
         return new StandardSwaggerTask(parts, ui.index(), root, buildNegotiator());
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public TaskConsumer<HttpContext> build() {
         try {
             return doBuild();

@@ -35,23 +35,7 @@ final class PathUtil {
         return part;
     }
 
-    static String normalizePart(URI part) {
-        return normalizePart(part.normalize().getRawPath());
-    }
-
-    static URI normalizePartUri(String part) {
-        return URI.create(normalizePart(part));
-    }
-
-    static URI normalizePartUri(URI part) {
-        return normalizePartUri(normalizePart(part));
-    }
-
     static URI normalizeUri(String uri) {
-        return URI.create(normalize(uri));
-    }
-
-    static URI normalizeUri(URI uri) {
         return URI.create(normalize(uri));
     }
 }

@@ -7,6 +7,9 @@ import io.github.amayaframework.web.WebApplication;
 
 import java.util.function.BiConsumer;
 
+/**
+ * TODO
+ */
 public final class SwaggerApplicationConfigurer implements Runnable1<WebApplication> {
     public static final String DEFAULT_ROOT = "/swagger";
     private final SwaggerTaskBuilder builder;
@@ -19,30 +22,54 @@ public final class SwaggerApplicationConfigurer implements Runnable1<WebApplicat
         this.configure = false;
     }
 
+    /**
+     * TODO
+     * @param defaultRoot
+     * @param configure
+     */
     public SwaggerApplicationConfigurer(String defaultRoot, boolean configure) {
         this.builder = new SwaggerTaskBuilder(defaultRoot);
         this.action = null;
         this.configure = configure;
     }
 
+    /**
+     * TODO
+     * @param defaultRoot
+     */
     public SwaggerApplicationConfigurer(String defaultRoot) {
         this(defaultRoot, false);
     }
 
+    /**
+     * TODO
+     * @param configure
+     */
     public SwaggerApplicationConfigurer(boolean configure) {
         this(DEFAULT_ROOT, configure);
     }
 
+    /**
+     * TODO
+     */
     public SwaggerApplicationConfigurer() {
         this(DEFAULT_ROOT, false);
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public SwaggerTaskBuilder getBuilder() {
         return builder;
     }
 
+    /**
+     * TODO
+     * @param options
+     */
     public void configure(OptionSet options) {
-        // TODO
+        // TODO Implement configure
     }
 
     @Override

@@ -6,6 +6,10 @@ import io.github.amayaframework.openui.OpenUiFactory;
 import java.net.URI;
 import java.util.*;
 
+/**
+ * TODO
+ * @param <C>
+ */
 public abstract class AbstractSwaggerConfigurer<C extends SwaggerConfigurer> implements SwaggerConfigurer {
     protected EncodingNegotiator negotiator;
     protected OpenUiFactory uiFactory;
@@ -15,6 +19,9 @@ public abstract class AbstractSwaggerConfigurer<C extends SwaggerConfigurer> imp
     protected Map<OpenApiSource, String> exposed;
     protected Collection<OpenApiSource> exposedView;
 
+    /**
+     * TODO
+     */
     protected void ensureDocuments() {
         if (documents == null) {
             documents = new LinkedList<>();
@@ -22,6 +29,9 @@ public abstract class AbstractSwaggerConfigurer<C extends SwaggerConfigurer> imp
         }
     }
 
+    /**
+     * TODO
+     */
     protected void ensureExposed() {
         if (exposed == null) {
             exposed = new HashMap<>();

@@ -18,16 +18,28 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * TODO
+ */
 public abstract class AbstractSwaggerTask implements TaskConsumer<HttpContext> {
     protected static final String ACCEPT_ENCODING = "Accept-Encoding";
     protected static final String CONTENT_ENCODING = "Content-Encoding";
     protected static final String LOCATION = "Location";
     protected final EncodingNegotiator negotiator;
 
+    /**
+     * TODO
+     * @param negotiator
+     */
     protected AbstractSwaggerTask(EncodingNegotiator negotiator) {
         this.negotiator = negotiator;
     }
 
+    /**
+     * TODO
+     * @param part
+     * @return
+     */
     protected static MimeData getMimeData(Part part) {
         var type = part.mimeType();
         var data = new MimeData(type);
@@ -37,6 +49,13 @@ public abstract class AbstractSwaggerTask implements TaskConsumer<HttpContext> {
         return data;
     }
 
+    /**
+     * TODO
+     * @param res
+     * @param encoder
+     * @param part
+     * @throws IOException
+     */
     protected static void sendPart(HttpResponse res, Encoder encoder, Part part) throws IOException {
         res.mimeData(getMimeData(part));
         OutputStream outputStream = res.outputStream();
@@ -51,6 +70,12 @@ public abstract class AbstractSwaggerTask implements TaskConsumer<HttpContext> {
         }
     }
 
+    /**
+     * TODO
+     * @param stream
+     * @param part
+     * @return
+     */
     protected static CompletableFuture<Void> sendPartAsync(OutputStream stream, Part part) {
         return Futures.run(() -> {
             try (var inputStream = part.inputStream()) {
@@ -61,6 +86,14 @@ public abstract class AbstractSwaggerTask implements TaskConsumer<HttpContext> {
         });
     }
 
+    /**
+     * TODO
+     * @param res
+     * @param encoder
+     * @param part
+     * @return
+     * @throws IOException
+     */
     protected static CompletableFuture<Void> sendPartAsync(HttpResponse res, Encoder encoder, Part part) throws IOException {
         res.mimeData(getMimeData(part));
         OutputStream outputStream = res.outputStream();
@@ -71,6 +104,11 @@ public abstract class AbstractSwaggerTask implements TaskConsumer<HttpContext> {
         return sendPartAsync(outputStream, part);
     }
 
+    /**
+     * TODO
+     * @param res
+     * @param url
+     */
     protected static void redirect(HttpResponse res, String url) {
         if (res.httpVersion().before(HttpVersion.HTTP_1_1)) {
             res.status(HttpCode.MOVED_PERMANENTLY);
@@ -80,6 +118,13 @@ public abstract class AbstractSwaggerTask implements TaskConsumer<HttpContext> {
         res.header(LOCATION, url);
     }
 
+    /**
+     * TODO
+     * @param req
+     * @param res
+     * @param part
+     * @throws IOException
+     */
     protected void sendPart(HttpRequest req, HttpResponse res, Part part) throws IOException {
         var encoder = negotiator.negotiate(req.header(ACCEPT_ENCODING));
         if (encoder == null) {
@@ -90,6 +135,13 @@ public abstract class AbstractSwaggerTask implements TaskConsumer<HttpContext> {
         sendPart(res, encoder == IdentityEncoder.INSTANCE ? null : encoder, part);
     }
 
+    /**
+     * TODO
+     * @param req
+     * @param res
+     * @param part
+     * @return
+     */
     protected CompletableFuture<Void> sendPartAsync(HttpRequest req, HttpResponse res, Part part) {
         var encoder = negotiator.negotiate(req.header(ACCEPT_ENCODING));
         if (encoder == null) {
