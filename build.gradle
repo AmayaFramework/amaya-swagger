@@ -27,8 +27,6 @@ dependencies {
     // Tests
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.10.0'
     testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.10.0'
-    // Tokenizer
-    implementation group: 'io.github.amayaframework', name: 'amaya-tokenize', version: '2.0.0'
     // TODO Remove dep deps
     implementation project(':compress')
     implementation group: 'com.aayushatharva.brotli4j', name: 'brotli4j', version: '1.20.0'
