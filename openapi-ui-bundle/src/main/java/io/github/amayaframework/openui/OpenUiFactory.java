@@ -7,6 +7,8 @@ import java.net.URI;
  */
 public interface OpenUiFactory {
 
+    OpenUi create();
+
     OpenUi create(URI uri);
 
     OpenUi create(OpenApiEntry entry);

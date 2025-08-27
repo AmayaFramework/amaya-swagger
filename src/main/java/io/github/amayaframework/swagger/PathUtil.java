@@ -17,18 +17,41 @@ final class PathUtil {
         if (path.charAt(0) == '/') {
             return path;
         }
-        return "/" + path;
+        return '/' + path;
     }
 
     static String normalize(URI uri) {
         return normalize(uri.normalize().getRawPath());
     }
 
-    static String normalizeTail(String path) {
-        var last = path.length() - 1;
-        if (path.charAt(last) == '/') {
-            return path.substring(0, last);
+    static String normalizePart(String part) {
+        if (part.isEmpty() || part.equals("/")) {
+            throw new IllegalArgumentException("Illegal part path: " + part);
         }
-        return path;
+        var last = part.length() - 1;
+        if (part.charAt(last) == '/') {
+            return part.substring(0, last);
+        }
+        return part;
+    }
+
+    static String normalizePart(URI part) {
+        return normalizePart(part.normalize().getRawPath());
+    }
+
+    static URI normalizePartUri(String part) {
+        return URI.create(normalizePart(part));
+    }
+
+    static URI normalizePartUri(URI part) {
+        return normalizePartUri(normalizePart(part));
+    }
+
+    static URI normalizeUri(String uri) {
+        return URI.create(normalize(uri));
+    }
+
+    static URI normalizeUri(URI uri) {
+        return URI.create(normalize(uri));
     }
 }

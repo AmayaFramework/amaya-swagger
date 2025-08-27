@@ -32,6 +32,13 @@ public final class SwaggerUiFactory implements OpenUiFactory {
     }
 
     @Override
+    public OpenUi create() {
+        var parts = new HashMap<>(PARTS);
+        parts.put(INIT, createBufferPart(StringUtil.generateInit()));
+        return new SwaggerUi(parts, INDEX);
+    }
+
+    @Override
     public OpenUi create(URI uri) {
         Objects.requireNonNull(uri);
         var parts = new HashMap<>(PARTS);

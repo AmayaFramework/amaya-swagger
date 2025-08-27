@@ -11,6 +11,7 @@ final class StringUtil {
     static final String EMPTY_URLS = "urls:[]";
     static final String URLS_PREFIX = "urls:[";
     static final String MARKER = "//%";
+    static final String MARKER_COMMA = MARKER + ',';
     static final String INIT_JS = "window.onload=function(){window.ui=SwaggerUIBundle({//%,dom_id:\"#swagger-ui\",deepLinking:!0,presets:[SwaggerUIBundle.presets.apis,SwaggerUIStandalonePreset],plugins:[SwaggerUIBundle.plugins.DownloadUrl],layout:\"StandaloneLayout\"})};";
 
     static String singleUrl(String url) {
@@ -19,6 +20,10 @@ final class StringUtil {
 
     static String urlEntry(String url, String name) {
         return "{\"url\":\"" + url + "\",\"name\":\"" + name + "\"}";
+    }
+
+    static String generateInit() {
+        return INIT_JS.replace(MARKER_COMMA, "");
     }
 
     static String generateInit(URI uri) {

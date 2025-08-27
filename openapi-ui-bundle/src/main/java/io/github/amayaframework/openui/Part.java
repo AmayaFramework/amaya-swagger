@@ -2,6 +2,7 @@ package io.github.amayaframework.openui;
 
 import io.github.amayaframework.http.MimeType;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 public interface Part {
@@ -12,5 +13,5 @@ public interface Part {
 
     String charset();
 
-    InputStream inputStream();
+    InputStream inputStream() throws IOException;
 }

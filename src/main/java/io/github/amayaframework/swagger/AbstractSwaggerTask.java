@@ -3,6 +3,9 @@ package io.github.amayaframework.swagger;
 import com.github.romanqed.jconv.TaskConsumer;
 import com.github.romanqed.jfunc.Exceptions;
 import com.github.romanqed.jsync.Futures;
+import io.github.amayaframework.compress.Encoder;
+import io.github.amayaframework.compress.EncodingNegotiator;
+import io.github.amayaframework.compress.IdentityEncoder;
 import io.github.amayaframework.context.HttpContext;
 import io.github.amayaframework.context.HttpRequest;
 import io.github.amayaframework.context.HttpResponse;
@@ -28,9 +31,8 @@ public abstract class AbstractSwaggerTask implements TaskConsumer<HttpContext> {
     protected static MimeData getMimeData(Part part) {
         var type = part.mimeType();
         var data = new MimeData(type);
-        if (type.isText()) {
-            data.setParameter("charset");
-            data.setValue(part.charset());
+        if (type.isText() && part.charset() != null) {
+            data.setParam("charset", part.charset());
         }
         return data;
     }
@@ -44,6 +46,8 @@ public abstract class AbstractSwaggerTask implements TaskConsumer<HttpContext> {
         }
         try (var inputStream = part.inputStream()) {
             inputStream.transferTo(outputStream);
+        } finally {
+            outputStream.close();
         }
     }
 
@@ -51,6 +55,8 @@ public abstract class AbstractSwaggerTask implements TaskConsumer<HttpContext> {
         return Futures.run(() -> {
             try (var inputStream = part.inputStream()) {
                 inputStream.transferTo(stream);
+            } finally {
+                stream.close();
             }
         });
     }
