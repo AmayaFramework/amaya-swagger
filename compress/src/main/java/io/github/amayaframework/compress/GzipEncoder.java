@@ -5,7 +5,7 @@ import java.io.OutputStream;
 import java.util.zip.GZIPOutputStream;
 
 public final class GzipEncoder implements Encoder {
-    private static final int DEFAULT_BUFFER_SIZE = 512;
+    public static final int DEFAULT_BUFFER_SIZE = 512;
     private final int bufferSize;
 
     public GzipEncoder(int bufferSize) {

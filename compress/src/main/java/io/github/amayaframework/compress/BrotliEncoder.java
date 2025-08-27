@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public final class BrotliEncoder implements Encoder {
-    private static final int DEFAULT_BUFFER_SIZE = 16384;
+    public static final int DEFAULT_BUFFER_SIZE = 16384;
     private final Parameters parameters;
     private final int bufferSize;
 
