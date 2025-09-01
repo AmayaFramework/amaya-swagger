@@ -15,7 +15,7 @@ import java.util.function.Consumer;
  */
 public final class SwaggerTaskBuilder extends AbstractSwaggerConfigurer<SwaggerTaskBuilder> {
     private final String defaultRoot;
-    private EncodingNegotiatorBuilder builder;
+    private CompressNegotiatorBuilder builder;
 
     /**
      * TODO
@@ -32,37 +32,37 @@ public final class SwaggerTaskBuilder extends AbstractSwaggerConfigurer<SwaggerT
     }
 
     @Override
-    public EncodingNegotiatorConfigurer negotiatorConfigurer() {
+    public CompressNegotiatorConfigurer negotiatorConfigurer() {
         if (builder == null) {
-            builder = new EncodingNegotiatorBuilder();
+            builder = new CompressNegotiatorBuilder();
         }
         return builder;
     }
 
     @Override
-    public SwaggerTaskBuilder configureNegotiator(Consumer<EncodingNegotiatorConfigurer> action) {
+    public SwaggerTaskBuilder configureNegotiator(Consumer<CompressNegotiatorConfigurer> action) {
         Objects.requireNonNull(action);
         if (builder == null) {
-            builder = new EncodingNegotiatorBuilder();
+            builder = new CompressNegotiatorBuilder();
         }
         action.accept(builder);
         return this;
     }
 
-    private EncodingNegotiator buildDefaultNegotiator() {
-        var manager = new MapEncodingManager();
+    private CompressNegotiator buildDefaultNegotiator() {
+        var manager = new MapCompressManager();
         manager.add(IdentityEncoder.INSTANCE);
         manager.add(new GzipEncoder());
         manager.add(new DeflateEncoder());
-        return new CachedEncodingNegotiator(
+        return new CachedCompressNegotiator(
                 manager,
                 new SplitEncodingHeaderParser(),
-                EncodingNegotiatorBuilder.DEFAULT_PRIORITIES,
-                EncodingNegotiatorBuilder.DEFAULT_CACHE_LIMIT
+                CompressNegotiatorBuilder.DEFAULT_PRIORITIES,
+                CompressNegotiatorBuilder.DEFAULT_CACHE_LIMIT
         );
     }
 
-    private EncodingNegotiator buildNegotiator() {
+    private CompressNegotiator buildNegotiator() {
         if (negotiator != null) {
             return negotiator;
         }

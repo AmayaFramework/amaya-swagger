@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * TODO
  */
-public interface EncodingNegotiatorConfigurer {
+public interface CompressNegotiatorConfigurer {
 
     /**
      * TODO
@@ -24,26 +24,26 @@ public interface EncodingNegotiatorConfigurer {
      * @param parser
      * @return
      */
-    EncodingNegotiatorConfigurer parser(EncodingHeaderParser parser);
+    CompressNegotiatorConfigurer parser(EncodingHeaderParser parser);
 
     /**
      * TODO
      * @return
      */
-    EncodingManager manager();
+    CompressManager manager();
 
     /**
      * TODO
      * @param manager
      * @return
      */
-    EncodingNegotiatorConfigurer manager(EncodingManager manager);
+    CompressNegotiatorConfigurer manager(CompressManager manager);
 
     /**
      * TODO
      * @return
      */
-    Collection<Encoder> encoders();
+    Collection<CompressEncoder> encoders();
 
     /**
      * TODO
@@ -51,21 +51,21 @@ public interface EncodingNegotiatorConfigurer {
      * @param priority
      * @return
      */
-    EncodingNegotiatorConfigurer addEncoder(Encoder encoder, Float priority);
+    CompressNegotiatorConfigurer addEncoder(CompressEncoder encoder, Float priority);
 
     /**
      * TODO
      * @param encoder
      * @return
      */
-    EncodingNegotiatorConfigurer addEncoder(Encoder encoder);
+    CompressNegotiatorConfigurer addEncoder(CompressEncoder encoder);
 
     /**
      * TODO
      * @param name
      * @return
      */
-    EncodingNegotiatorConfigurer removeEncoder(String name);
+    CompressNegotiatorConfigurer removeEncoder(String name);
 
     /**
      * TODO
@@ -78,7 +78,7 @@ public interface EncodingNegotiatorConfigurer {
      * @param priorities
      * @return
      */
-    EncodingNegotiatorConfigurer priorities(Map<String, Float> priorities);
+    CompressNegotiatorConfigurer priorities(Map<String, Float> priorities);
 
     /**
      * TODO
@@ -86,5 +86,5 @@ public interface EncodingNegotiatorConfigurer {
      * @param value
      * @return
      */
-    EncodingNegotiatorConfigurer priority(String encoding, Float value);
+    CompressNegotiatorConfigurer priority(String encoding, Float value);
 }

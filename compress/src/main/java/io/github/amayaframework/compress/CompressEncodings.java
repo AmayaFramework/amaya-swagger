@@ -3,8 +3,8 @@ package io.github.amayaframework.compress;
 /**
  * TODO
  */
-public final class Encodings {
-    private Encodings() {
+public final class CompressEncodings {
+    private CompressEncodings() {
     }
 
     public static final String IDENTITY = "identity";

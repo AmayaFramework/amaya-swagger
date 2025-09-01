@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * TODO
  */
-public final class CachedEncodingNegotiator extends AbstractEncodingNegotiator {
+public final class CachedCompressNegotiator extends AbstractCompressNegotiator {
     private final Map<String, EncoderHolder> cache;
     private final int cacheLimit;
 
@@ -17,7 +17,7 @@ public final class CachedEncodingNegotiator extends AbstractEncodingNegotiator {
      * @param priority
      * @param cacheLimit
      */
-    public CachedEncodingNegotiator(EncodingManager manager,
+    public CachedCompressNegotiator(CompressManager manager,
                                     EncodingHeaderParser parser,
                                     Map<String, Float> priority,
                                     int cacheLimit) {
@@ -31,7 +31,7 @@ public final class CachedEncodingNegotiator extends AbstractEncodingNegotiator {
     }
 
     @Override
-    protected Encoder lookup(String header) {
+    protected CompressEncoder lookup(String header) {
         if (cache == null) {
             return select(header);
         }
@@ -46,9 +46,9 @@ public final class CachedEncodingNegotiator extends AbstractEncodingNegotiator {
     }
 
     private static final class EncoderHolder {
-        Encoder encoder;
+        CompressEncoder encoder;
 
-        EncoderHolder(Encoder encoder) {
+        EncoderHolder(CompressEncoder encoder) {
             this.encoder = encoder;
         }
     }

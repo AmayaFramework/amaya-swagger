@@ -5,8 +5,8 @@ import java.util.Map;
 /**
  *
  */
-public abstract class AbstractEncodingNegotiator implements EncodingNegotiator {
-    protected final EncodingManager manager;
+public abstract class AbstractCompressNegotiator implements CompressNegotiator {
+    protected final CompressManager manager;
     protected final EncodingHeaderParser parser;
     protected final Map<String, Float> priority;
 
@@ -16,7 +16,7 @@ public abstract class AbstractEncodingNegotiator implements EncodingNegotiator {
      * @param parser
      * @param priority
      */
-    protected AbstractEncodingNegotiator(EncodingManager manager,
+    protected AbstractCompressNegotiator(CompressManager manager,
                                          EncodingHeaderParser parser,
                                          Map<String, Float> priority) {
         this.manager = manager;
@@ -29,7 +29,7 @@ public abstract class AbstractEncodingNegotiator implements EncodingNegotiator {
      * @param header
      * @return
      */
-    protected Encoder select(String header) {
+    protected CompressEncoder select(String header) {
         return manager.select(parser.parse(header, priority));
     }
 
@@ -38,10 +38,10 @@ public abstract class AbstractEncodingNegotiator implements EncodingNegotiator {
      * @param header
      * @return
      */
-    protected abstract Encoder lookup(String header);
+    protected abstract CompressEncoder lookup(String header);
 
     @Override
-    public Encoder negotiate(String header) {
+    public CompressEncoder negotiate(String header) {
         if (header == null || header.isBlank()) {
             return IdentityEncoder.INSTANCE;
         }

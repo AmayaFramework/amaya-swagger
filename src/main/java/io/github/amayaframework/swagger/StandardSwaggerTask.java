@@ -2,7 +2,7 @@ package io.github.amayaframework.swagger;
 
 import com.github.romanqed.jconv.Task;
 import com.github.romanqed.jsync.Futures;
-import io.github.amayaframework.compress.EncodingNegotiator;
+import io.github.amayaframework.compress.CompressNegotiator;
 import io.github.amayaframework.context.HttpContext;
 import io.github.amayaframework.http.HttpCode;
 import io.github.amayaframework.openui.Part;
@@ -27,7 +27,7 @@ public final class StandardSwaggerTask extends AbstractSwaggerTask {
      * @param root
      * @param negotiator
      */
-    public StandardSwaggerTask(Map<String, Part> parts, Part index, String root, EncodingNegotiator negotiator) {
+    public StandardSwaggerTask(Map<String, Part> parts, Part index, String root, CompressNegotiator negotiator) {
         super(negotiator);
         this.parts = parts;
         this.index = index;

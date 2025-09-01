@@ -7,26 +7,26 @@ import java.util.function.Supplier;
 /**
  * TODO
  */
-public final class MapEncodingManager implements EncodingManager {
-    private final Map<String, Encoder> body;
+public final class MapCompressManager implements CompressManager {
+    private final Map<String, CompressEncoder> body;
 
     /**
      * TODO
      * @param body
      */
-    public MapEncodingManager(Map<String, Encoder> body) {
+    public MapCompressManager(Map<String, CompressEncoder> body) {
         this.body = body;
     }
 
     /**
      * TODO
      */
-    public MapEncodingManager() {
+    public MapCompressManager() {
         this.body = new HashMap<>();
     }
 
     @Override
-    public Encoder get(String encoding) {
+    public CompressEncoder get(String encoding) {
         return body.get(encoding);
     }
 
@@ -36,21 +36,21 @@ public final class MapEncodingManager implements EncodingManager {
     }
 
     @Override
-    public void add(Encoder encoder) {
+    public void add(CompressEncoder encoder) {
         if (encoder != null) {
             body.put(encoder.name(), encoder);
         }
     }
 
     @Override
-    public void ensure(Encoder encoder) {
+    public void ensure(CompressEncoder encoder) {
         if (encoder != null) {
             body.putIfAbsent(encoder.name(), encoder);
         }
     }
 
     @Override
-    public void ensure(String name, Supplier<Encoder> supplier) {
+    public void ensure(String name, Supplier<CompressEncoder> supplier) {
         if (name == null || supplier == null) {
             return;
         }
@@ -64,12 +64,12 @@ public final class MapEncodingManager implements EncodingManager {
     }
 
     @Override
-    public Encoder remove(String encoding) {
+    public CompressEncoder remove(String encoding) {
         return body.remove(encoding);
     }
 
     @Override
-    public Encoder select(Iterable<String> encodings) {
+    public CompressEncoder select(Iterable<String> encodings) {
         for (var encoding : encodings) {
             var found = body.get(encoding);
             if (found != null) {

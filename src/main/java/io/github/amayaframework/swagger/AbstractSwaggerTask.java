@@ -3,8 +3,8 @@ package io.github.amayaframework.swagger;
 import com.github.romanqed.jconv.TaskConsumer;
 import com.github.romanqed.jfunc.Exceptions;
 import com.github.romanqed.jsync.Futures;
-import io.github.amayaframework.compress.Encoder;
-import io.github.amayaframework.compress.EncodingNegotiator;
+import io.github.amayaframework.compress.CompressEncoder;
+import io.github.amayaframework.compress.CompressNegotiator;
 import io.github.amayaframework.compress.IdentityEncoder;
 import io.github.amayaframework.context.HttpContext;
 import io.github.amayaframework.context.HttpRequest;
@@ -25,13 +25,13 @@ public abstract class AbstractSwaggerTask implements TaskConsumer<HttpContext> {
     protected static final String ACCEPT_ENCODING = "Accept-Encoding";
     protected static final String CONTENT_ENCODING = "Content-Encoding";
     protected static final String LOCATION = "Location";
-    protected final EncodingNegotiator negotiator;
+    protected final CompressNegotiator negotiator;
 
     /**
      * TODO
      * @param negotiator
      */
-    protected AbstractSwaggerTask(EncodingNegotiator negotiator) {
+    protected AbstractSwaggerTask(CompressNegotiator negotiator) {
         this.negotiator = negotiator;
     }
 
@@ -56,7 +56,7 @@ public abstract class AbstractSwaggerTask implements TaskConsumer<HttpContext> {
      * @param part
      * @throws IOException
      */
-    protected static void sendPart(HttpResponse res, Encoder encoder, Part part) throws IOException {
+    protected static void sendPart(HttpResponse res, CompressEncoder encoder, Part part) throws IOException {
         res.mimeData(getMimeData(part));
         OutputStream outputStream = res.outputStream();
         if (encoder != null) {
@@ -94,7 +94,7 @@ public abstract class AbstractSwaggerTask implements TaskConsumer<HttpContext> {
      * @return
      * @throws IOException
      */
-    protected static CompletableFuture<Void> sendPartAsync(HttpResponse res, Encoder encoder, Part part) throws IOException {
+    protected static CompletableFuture<Void> sendPartAsync(HttpResponse res, CompressEncoder encoder, Part part) throws IOException {
         res.mimeData(getMimeData(part));
         OutputStream outputStream = res.outputStream();
         if (encoder != null) {

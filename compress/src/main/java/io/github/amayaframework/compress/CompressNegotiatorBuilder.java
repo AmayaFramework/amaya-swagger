@@ -5,7 +5,7 @@ import java.util.Map;
 /**
  * TODO
  */
-public final class EncodingNegotiatorBuilder extends AbstractEncodingNegotiatorConfigurer<EncodingNegotiatorBuilder> {
+public final class CompressNegotiatorBuilder extends AbstractCompressNegotiatorConfigurer<CompressNegotiatorBuilder> {
 
     /**
      * TODO
@@ -16,10 +16,10 @@ public final class EncodingNegotiatorBuilder extends AbstractEncodingNegotiatorC
      * TODO
      */
     public static final Map<String, Float> DEFAULT_PRIORITIES = Map.of(
-            Encodings.BROTLI, 1.0f,
-            Encodings.GZIP, 0.9f,
-            Encodings.DEFLATE, 0.8f,
-            Encodings.IDENTITY, 0.001f
+            CompressEncodings.BROTLI, 0.3f,
+            CompressEncodings.GZIP, 0.2f,
+            CompressEncodings.DEFLATE, 0.1f,
+            CompressEncodings.IDENTITY, 0.001f
     );
 
     private int cacheLimit = DEFAULT_CACHE_LIMIT;
@@ -43,17 +43,17 @@ public final class EncodingNegotiatorBuilder extends AbstractEncodingNegotiatorC
      * @param cacheLimit
      * @return
      */
-    public EncodingNegotiatorBuilder cacheLimit(int cacheLimit) {
+    public CompressNegotiatorBuilder cacheLimit(int cacheLimit) {
         this.cacheLimit = cacheLimit;
         return this;
     }
 
-    private void addDefaultEncoders(EncodingManager manager) {
-        manager.ensure(Encodings.DEFLATE, DeflateEncoder::new);
-        manager.ensure(Encodings.GZIP, GzipEncoder::new);
+    private void addDefaultEncoders(CompressManager manager) {
+        manager.ensure(CompressEncodings.DEFLATE, DeflateEncoder::new);
+        manager.ensure(CompressEncodings.GZIP, GzipEncoder::new);
     }
 
-    private void addEncoders(EncodingManager manager) {
+    private void addEncoders(CompressManager manager) {
         if (encoders == null) {
             addDefaultEncoders(manager);
         } else {
@@ -65,13 +65,13 @@ public final class EncodingNegotiatorBuilder extends AbstractEncodingNegotiatorC
      * TODO
      * @return
      */
-    public EncodingNegotiator build() {
-        var manager = this.manager == null ? new MapEncodingManager() : this.manager;
+    public CompressNegotiator build() {
+        var manager = this.manager == null ? new MapCompressManager() : this.manager;
         manager.ensure(IdentityEncoder.INSTANCE);
         var parser = this.parser == null ? new SplitEncodingHeaderParser() : this.parser;
         addEncoders(manager);
         var priorities = this.priorities == null ? DEFAULT_PRIORITIES : this.priorities;
-        var ret = new CachedEncodingNegotiator(manager, parser, priorities, cacheLimit);
+        var ret = new CachedCompressNegotiator(manager, parser, priorities, cacheLimit);
         reset();
         return ret;
     }

@@ -1,8 +1,8 @@
 package io.github.amayaframework.swagger;
 
 import io.github.amayaframework.application.Resettable;
-import io.github.amayaframework.compress.EncodingNegotiator;
-import io.github.amayaframework.compress.EncodingNegotiatorConfigurer;
+import io.github.amayaframework.compress.CompressNegotiator;
+import io.github.amayaframework.compress.CompressNegotiatorConfigurer;
 import io.github.amayaframework.openui.OpenUiFactory;
 
 import java.net.URI;
@@ -18,27 +18,27 @@ public interface SwaggerConfigurer extends Resettable {
      * TODO
      * @return
      */
-    EncodingNegotiatorConfigurer negotiatorConfigurer(); // если неготиатора не будет, будет использован конфигуратор
+    CompressNegotiatorConfigurer negotiatorConfigurer(); // если неготиатора не будет, будет использован конфигуратор
 
     /**
      * TODO
      * @param action
      * @return
      */
-    SwaggerConfigurer configureNegotiator(Consumer<EncodingNegotiatorConfigurer> action);
+    SwaggerConfigurer configureNegotiator(Consumer<CompressNegotiatorConfigurer> action);
 
     /**
      * TODO
      * @return
      */
-    EncodingNegotiator negotiator(); // если задан, то конфигуратор игнорируется
+    CompressNegotiator negotiator(); // если задан, то конфигуратор игнорируется
 
     /**
      * TODO
      * @param negotiator
      * @return
      */
-    SwaggerConfigurer negotiator(EncodingNegotiator negotiator);
+    SwaggerConfigurer negotiator(CompressNegotiator negotiator);
 
     /**
      * TODO

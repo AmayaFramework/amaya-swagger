@@ -1,6 +1,6 @@
 package io.github.amayaframework.swagger;
 
-import io.github.amayaframework.compress.EncodingNegotiator;
+import io.github.amayaframework.compress.CompressNegotiator;
 import io.github.amayaframework.openui.OpenUiFactory;
 
 import java.net.URI;
@@ -11,7 +11,7 @@ import java.util.*;
  * @param <C>
  */
 public abstract class AbstractSwaggerConfigurer<C extends SwaggerConfigurer> implements SwaggerConfigurer {
-    protected EncodingNegotiator negotiator;
+    protected CompressNegotiator negotiator;
     protected OpenUiFactory uiFactory;
     protected URI root;
     protected List<OpenApiSource> documents;
@@ -51,13 +51,13 @@ public abstract class AbstractSwaggerConfigurer<C extends SwaggerConfigurer> imp
     }
 
     @Override
-    public EncodingNegotiator negotiator() {
+    public CompressNegotiator negotiator() {
         return negotiator;
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public C negotiator(EncodingNegotiator negotiator) {
+    public C negotiator(CompressNegotiator negotiator) {
         this.negotiator = negotiator;
         return (C) this;
     }

@@ -5,19 +5,19 @@ import java.io.OutputStream;
 /**
  * TODO
  */
-public final class IdentityEncoder implements Encoder {
+public final class IdentityEncoder implements CompressEncoder {
 
     /**
      * TODO
      */
-    public static final Encoder INSTANCE = new IdentityEncoder();
+    public static final CompressEncoder INSTANCE = new IdentityEncoder();
 
     private IdentityEncoder() {
     }
 
     @Override
     public String name() {
-        return Encodings.IDENTITY;
+        return CompressEncodings.IDENTITY;
     }
 
     @Override

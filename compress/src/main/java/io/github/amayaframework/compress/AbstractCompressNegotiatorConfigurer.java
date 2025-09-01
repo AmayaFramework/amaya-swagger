@@ -9,11 +9,11 @@ import java.util.Map;
  * TODO
  * @param <C>
  */
-public abstract class AbstractEncodingNegotiatorConfigurer<C extends EncodingNegotiatorConfigurer> implements EncodingNegotiatorConfigurer {
+public abstract class AbstractCompressNegotiatorConfigurer<C extends CompressNegotiatorConfigurer> implements CompressNegotiatorConfigurer {
     protected EncodingHeaderParser parser;
-    protected EncodingManager manager;
-    protected Map<String, Encoder> encoders;
-    protected Collection<Encoder> encodersView;
+    protected CompressManager manager;
+    protected Map<String, CompressEncoder> encoders;
+    protected Collection<CompressEncoder> encodersView;
     protected Map<String, Float> priorities;
 
     /**
@@ -70,26 +70,26 @@ public abstract class AbstractEncodingNegotiatorConfigurer<C extends EncodingNeg
     }
 
     @Override
-    public EncodingManager manager() {
+    public CompressManager manager() {
         return manager;
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public C manager(EncodingManager manager) {
+    public C manager(CompressManager manager) {
         this.manager = manager;
         return (C) this;
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public Collection<Encoder> encoders() {
+    public Collection<CompressEncoder> encoders() {
         return encodersView == null ? Collections.EMPTY_LIST : encodersView;
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public C addEncoder(Encoder encoder, Float priority) {
+    public C addEncoder(CompressEncoder encoder, Float priority) {
         ensureEncoders();
         var name = encoder.name();
         encoders.put(name, encoder);
@@ -111,7 +111,7 @@ public abstract class AbstractEncodingNegotiatorConfigurer<C extends EncodingNeg
 
     @Override
     @SuppressWarnings("unchecked")
-    public C addEncoder(Encoder encoder) {
+    public C addEncoder(CompressEncoder encoder) {
         ensureEncoders();
         encoders.put(encoder.name(), encoder);
         return (C) this;

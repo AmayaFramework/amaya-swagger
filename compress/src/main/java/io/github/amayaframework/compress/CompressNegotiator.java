@@ -4,12 +4,12 @@ package io.github.amayaframework.compress;
  * TODO
  */
 @FunctionalInterface
-public interface EncodingNegotiator {
+public interface CompressNegotiator {
 
     /**
      * TODO
      * @param header
      * @return
      */
-    Encoder negotiate(String header);
+    CompressEncoder negotiate(String header);
 }

@@ -6,7 +6,7 @@ import java.io.OutputStream;
 /**
  * TODO
  */
-public interface Encoder {
+public interface CompressEncoder {
 
     /**
      * TODO

@@ -7,7 +7,7 @@ import java.util.zip.DeflaterOutputStream;
 /**
  * TODO
  */
-public final class DeflateEncoder implements Encoder {
+public final class DeflateEncoder implements CompressEncoder {
     public static final int DEFAULT_BUFFER_SIZE = 512;
     private final int bufferSize;
 
@@ -28,7 +28,7 @@ public final class DeflateEncoder implements Encoder {
 
     @Override
     public String name() {
-        return Encodings.DEFLATE;
+        return CompressEncodings.DEFLATE;
     }
 
     @Override

@@ -7,7 +7,7 @@ import java.util.zip.GZIPOutputStream;
 /**
  * TODO
  */
-public final class GzipEncoder implements Encoder {
+public final class GzipEncoder implements CompressEncoder {
     public static final int DEFAULT_BUFFER_SIZE = 512;
     private final int bufferSize;
 
@@ -28,7 +28,7 @@ public final class GzipEncoder implements Encoder {
 
     @Override
     public String name() {
-        return Encodings.GZIP;
+        return CompressEncodings.GZIP;
     }
 
     @Override
