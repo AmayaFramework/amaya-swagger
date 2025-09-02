@@ -1,12 +1,12 @@
 package io.github.amayaframework.swagger;
 
 import com.github.romanqed.jconv.Task;
-import com.github.romanqed.jsync.Futures;
 import io.github.amayaframework.compress.CompressNegotiator;
 import io.github.amayaframework.context.HttpContext;
 import io.github.amayaframework.http.HttpCode;
 import io.github.amayaframework.openui.Part;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
@@ -94,7 +94,12 @@ public final class ExtendedSwaggerTask extends AbstractSwaggerTask {
         // 3. Otherwise, decide whether to return 404 or pass to the next task
         // 4. If the path starts with the root => return 404
         if (path.startsWith(slashRoot)) {
-            return Futures.run(() -> context.response().sendError(HttpCode.NOT_FOUND));
+            try {
+                context.response().sendError(HttpCode.NOT_FOUND);
+                return CompletableFuture.completedFuture(null);
+            } catch (IOException e) {
+                return CompletableFuture.failedFuture(e);
+            }
         }
         // 5. For all other cases, delegate to the next task since we cannot be 100% sure
         //    whether the requested path belongs to Swagger or not

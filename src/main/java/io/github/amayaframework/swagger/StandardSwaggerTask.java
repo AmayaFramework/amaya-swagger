@@ -7,6 +7,7 @@ import io.github.amayaframework.context.HttpContext;
 import io.github.amayaframework.http.HttpCode;
 import io.github.amayaframework.openui.Part;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
@@ -120,7 +121,12 @@ public final class StandardSwaggerTask extends AbstractSwaggerTask {
         var tail = path.substring(rootLength + 1);
         var part = parts.get(tail);
         if (part == null) {
-            return Futures.run(() -> res.sendError(HttpCode.NOT_FOUND));
+            try {
+                res.sendError(HttpCode.NOT_FOUND);
+            } catch (IOException e) {
+                return CompletableFuture.failedFuture(e);
+            }
+            return CompletableFuture.completedFuture(null);
         }
         return sendPartAsync(req, res, part);
     }

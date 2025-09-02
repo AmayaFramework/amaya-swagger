@@ -1,7 +1,6 @@
 package io.github.amayaframework.swagger;
 
 import com.github.romanqed.jconv.TaskConsumer;
-import com.github.romanqed.jfunc.Exceptions;
 import com.github.romanqed.jsync.Futures;
 import io.github.amayaframework.compress.CompressEncoder;
 import io.github.amayaframework.compress.CompressNegotiator;
@@ -187,8 +186,7 @@ public abstract class AbstractSwaggerTask implements TaskConsumer<HttpContext> {
         try {
             return sendPartAsync(res, encoder == IdentityEncoder.INSTANCE ? null : encoder, part);
         } catch (IOException e) {
-            Exceptions.throwAny(e);
-            return null;
+            return CompletableFuture.failedFuture(e);
         }
     }
 
