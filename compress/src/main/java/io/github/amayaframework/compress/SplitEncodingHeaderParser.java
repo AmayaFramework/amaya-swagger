@@ -7,13 +7,37 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Default implementation of {@link EncodingHeaderParser} based on string splitting.
+ * <p>
+ * Parses the {@code Accept-Encoding} HTTP header into a prioritized list of encodings
+ * with support for quality factors (<em>q-values</em>).
+ * <ul>
+ *   <li>Encodings without a {@code q} parameter default to priority {@code 1.0}.</li>
+ *   <li>Invalid or missing q-values are ignored.</li>
+ *   <li>Values are clamped to the range {@code [0.0, 1.0]}.</li>
+ *   <li>The {@code identity} encoding is always included with default priority {@code 1.0}
+ *       if not explicitly disabled.</li>
+ * </ul>
+ * The resulting list is sorted in descending order of priority, with ties resolved
+ * by the optional {@code priorities} map passed to {@link #parse(String, Map)}.
+ */
 public final class SplitEncodingHeaderParser implements EncodingHeaderParser {
     private final Tokenizer tokenizer;
 
+    /**
+     * Creates a parser using the given {@link Tokenizer}
+     * for splitting header values.
+     *
+     * @param tokenizer tokenizer instance used for splitting
+     */
     public SplitEncodingHeaderParser(Tokenizer tokenizer) {
         this.tokenizer = tokenizer;
     }
 
+    /**
+     * Creates a parser using {@link Tokenizers#PLAIN_TOKENIZER}.
+     */
     public SplitEncodingHeaderParser() {
         this(Tokenizers.PLAIN_TOKENIZER);
     }
@@ -81,6 +105,7 @@ public final class SplitEncodingHeaderParser implements EncodingHeaderParser {
         for (var value : iterable) {
             parseHeader(value, map);
         }
+        // Ensure identity encoding is always available unless disabled
         map.putIfAbsent("identity", 1f);
         var ret = new ArrayList<String>(map.size());
         map.forEach((k, v) -> {

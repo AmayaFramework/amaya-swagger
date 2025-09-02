@@ -6,8 +6,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * TODO
- * @param <C>
+ * Base implementation of {@link CompressNegotiatorConfigurer}.
+ * <p>
+ * Provides default storage and fluent methods for configuring
+ * an encoding parser, manager, encoders, and priorities.
+ * Subclasses can extend this class to build concrete negotiator
+ * configurers with additional behavior (e.g. producing a specific
+ * {@link CompressNegotiator}).
+ *
+ * @param <C> the self type, enabling fluent method chaining
  */
 public abstract class AbstractCompressNegotiatorConfigurer<C extends CompressNegotiatorConfigurer> implements CompressNegotiatorConfigurer {
     protected EncodingHeaderParser parser;
@@ -17,7 +24,8 @@ public abstract class AbstractCompressNegotiatorConfigurer<C extends CompressNeg
     protected Map<String, Float> priorities;
 
     /**
-     * TODO
+     * Ensures that the encoder registry is initialized.
+     * Lazily creates a backing map and unmodifiable view if needed.
      */
     protected void ensureEncoders() {
         if (encoders == null) {
@@ -27,7 +35,8 @@ public abstract class AbstractCompressNegotiatorConfigurer<C extends CompressNeg
     }
 
     /**
-     * TODO
+     * Ensures that the priorities map is initialized.
+     * Lazily creates it if needed.
      */
     protected void ensurePriorities() {
         if (priorities == null) {
@@ -36,9 +45,13 @@ public abstract class AbstractCompressNegotiatorConfigurer<C extends CompressNeg
     }
 
     /**
-     * TODO
-     * @param encoding
-     * @param priority
+     * Sets the priority (q-value) for the given encoding.
+     * <p>
+     * If both {@code priorities} and {@code priority} are {@code null},
+     * nothing is changed.
+     *
+     * @param encoding the encoding name
+     * @param priority the priority value, may be {@code null}
      */
     protected void setPriority(String encoding, Float priority) {
         if (priorities == null && priority == null) {

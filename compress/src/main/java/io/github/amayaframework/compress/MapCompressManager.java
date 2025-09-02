@@ -5,21 +5,28 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 /**
- * TODO
+ * Default {@link CompressManager} implementation backed by a {@link Map}.
+ * <p>
+ * Encoders are stored under their encoding name (as returned by
+ * {@link CompressEncoder#name()}) and can be added, ensured,
+ * removed, or selected for negotiation.
+ * <p>
+ * This implementation preserves only the last added encoder for a given name.
  */
 public final class MapCompressManager implements CompressManager {
     private final Map<String, CompressEncoder> body;
 
     /**
-     * TODO
-     * @param body
+     * Creates a new manager with a custom backing map.
+     *
+     * @param body the map used for storing encoders
      */
     public MapCompressManager(Map<String, CompressEncoder> body) {
         this.body = body;
     }
 
     /**
-     * TODO
+     * Creates a new manager with an empty {@link HashMap} as the backing store.
      */
     public MapCompressManager() {
         this.body = new HashMap<>();
