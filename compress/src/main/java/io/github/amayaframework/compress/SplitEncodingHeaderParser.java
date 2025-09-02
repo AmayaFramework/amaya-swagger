@@ -4,6 +4,7 @@ import io.github.amayaframework.tokenize.Tokenizer;
 import io.github.amayaframework.tokenize.Tokenizers;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,11 +17,13 @@ import java.util.Map;
  *   <li>Encodings without a {@code q} parameter default to priority {@code 1.0}.</li>
  *   <li>Invalid or missing q-values are ignored.</li>
  *   <li>Values are clamped to the range {@code [0.0, 1.0]}.</li>
- *   <li>The {@code identity} encoding is always included with default priority {@code 1.0}
- *       if not explicitly disabled.</li>
+ *   <li>The {@code identity} encoding is always included with a very low default
+ *       priority ({@code 0.001}), ensuring it acts only as a fallback if no other
+ *       encodings are acceptable.</li>
  * </ul>
  * The resulting list is sorted in descending order of priority, with ties resolved
- * by the optional {@code priorities} map passed to {@link #parse(String, Map)}.
+ * by the optional server-side priorities map passed to {@link #parse(String, Map)}.
+ * Client order is not preserved when q-values are equal.
  */
 public final class SplitEncodingHeaderParser implements EncodingHeaderParser {
     private final Tokenizer tokenizer;
@@ -77,6 +80,13 @@ public final class SplitEncodingHeaderParser implements EncodingHeaderParser {
         return q;
     }
 
+    private static Comparator<? super String> selectComparator(Map<String, Float> cp, Map<String, Float> sp) {
+        if (sp == null || sp.isEmpty()) {
+            return new ClientComparator(cp);
+        }
+        return new ServerComparator(cp, sp);
+    }
+
     private void parseHeader(String raw, Map<String, Float> map) {
         var split = tokenizer.tokenize(raw, ";").iterator();
         var encoding = StringUtil.trim(0, split.next());
@@ -106,20 +116,46 @@ public final class SplitEncodingHeaderParser implements EncodingHeaderParser {
             parseHeader(value, map);
         }
         // Ensure identity encoding is always available unless disabled
-        map.putIfAbsent("identity", 1f);
+        map.putIfAbsent("identity", 0.001f);
         var ret = new ArrayList<String>(map.size());
         map.forEach((k, v) -> {
             if (v > 0) {
                 ret.add(k);
             }
         });
-        ret.sort((l, r) -> {
-            var cmp = map.get(r).compareTo(map.get(l));
-            if (cmp == 0 && priorities != null) {
-                return priorities.getOrDefault(r, 1f).compareTo(priorities.getOrDefault(l, 1f));
+        ret.sort(selectComparator(map, priorities));
+        return ret;
+    }
+
+    private static final class ClientComparator implements Comparator<String> {
+        private final Map<String, Float> client;
+
+        ClientComparator(Map<String, Float> client) {
+            this.client = client;
+        }
+
+        @Override
+        public int compare(String left, String right) {
+            return client.get(right).compareTo(client.get(left));
+        }
+    }
+
+    private static final class ServerComparator implements Comparator<String> {
+        private final Map<String, Float> client;
+        private final Map<String, Float> server;
+
+        ServerComparator(Map<String, Float> client, Map<String, Float> server) {
+            this.client = client;
+            this.server = server;
+        }
+
+        @Override
+        public int compare(String left, String right) {
+            var cmp = client.get(right).compareTo(client.get(left));
+            if (cmp == 0) {
+                return server.getOrDefault(right, 1f).compareTo(server.getOrDefault(left, 1f));
             }
             return cmp;
-        });
-        return ret;
+        }
     }
 }
