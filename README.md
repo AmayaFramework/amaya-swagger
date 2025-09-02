@@ -25,7 +25,7 @@ To install it, you will need:
 ```groovy
 dependencies {
     implementation group: 'io.github.amayaframework', name: 'amaya-core', version: '3.4.0'
-    implementation group: 'io.github.amayaframework', name: 'amaya-swagger', version: '2.0.0'
+    implementation group: 'io.github.amayaframework', name: 'amaya-swagger', version: '2.0.1'
     // choose any OpenUI implementation:
     implementation group: 'io.github.amayaframework', name: 'swagger-ui-bundle', version: '2.0.0'
 }
@@ -43,7 +43,7 @@ dependencies {
     <dependency>
         <groupId>io.github.amayaframework</groupId>
         <artifactId>amaya-swagger</artifactId>
-        <version>2.0.0</version>
+        <version>2.0.1</version>
     </dependency>
     <!-- choose any OpenUI implementation -->
     <dependency>
