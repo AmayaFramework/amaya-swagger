@@ -29,6 +29,7 @@ public abstract class AbstractSwaggerTask implements TaskConsumer<HttpContext> {
 
     /**
      * TODO
+     *
      * @param negotiator
      */
     protected AbstractSwaggerTask(CompressNegotiator negotiator) {
@@ -37,6 +38,7 @@ public abstract class AbstractSwaggerTask implements TaskConsumer<HttpContext> {
 
     /**
      * TODO
+     *
      * @param part
      * @return
      */
@@ -51,6 +53,7 @@ public abstract class AbstractSwaggerTask implements TaskConsumer<HttpContext> {
 
     /**
      * TODO
+     *
      * @param res
      * @param encoder
      * @param part
@@ -72,6 +75,7 @@ public abstract class AbstractSwaggerTask implements TaskConsumer<HttpContext> {
 
     /**
      * TODO
+     *
      * @param stream
      * @param part
      * @return
@@ -88,6 +92,7 @@ public abstract class AbstractSwaggerTask implements TaskConsumer<HttpContext> {
 
     /**
      * TODO
+     *
      * @param res
      * @param encoder
      * @param part
@@ -106,6 +111,7 @@ public abstract class AbstractSwaggerTask implements TaskConsumer<HttpContext> {
 
     /**
      * TODO
+     *
      * @param res
      * @param url
      */
@@ -120,6 +126,7 @@ public abstract class AbstractSwaggerTask implements TaskConsumer<HttpContext> {
 
     /**
      * TODO
+     *
      * @param req
      * @param res
      * @param part
@@ -137,6 +144,7 @@ public abstract class AbstractSwaggerTask implements TaskConsumer<HttpContext> {
 
     /**
      * TODO
+     *
      * @param req
      * @param res
      * @param part

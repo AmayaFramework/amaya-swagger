@@ -28,13 +28,11 @@ dependencies {
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.10.0'
     testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.10.0'
     // TODO Remove dep deps
-    implementation project(':compress')
-    implementation group: 'com.aayushatharva.brotli4j', name: 'brotli4j', version: '1.20.0'
-    runtimeOnly group: 'com.aayushatharva.brotli4j', name: 'native-windows-x86_64', version: '1.20.0'
+    implementation project(':compress') // TODO Implementation
     implementation group: 'io.github.amayaframework', name: 'amaya-core', version: '3.4.0'
     implementation group: 'io.github.amayaframework', name: 'amaya-tomcat', version: '3.1.0-10.1.44'
-    implementation project('openapi-ui-bundle')
-    implementation project('swagger-ui-bundle')
+    implementation project('openapi-ui-bundle') // TODO api
+    implementation project('swagger-ui-bundle') // TODO REMOVE
 }
 
 test {

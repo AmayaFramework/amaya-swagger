@@ -16,11 +16,11 @@ final class DocumentPart extends AbstractPart {
         this.provider = provider;
     }
 
-    static DocumentPart of(OpenApiSource source, String charset) {
+    static DocumentPart of(OpenApiSource source) {
         return new DocumentPart(
                 PathUtil.normalize(source.uri()),
                 source.format().type,
-                charset,
+                source.charset(),
                 source.provider()
         );
     }

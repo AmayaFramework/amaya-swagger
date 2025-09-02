@@ -11,6 +11,7 @@ public interface InputStreamProvider {
 
     /**
      * TODO
+     *
      * @return
      * @throws IOException
      */

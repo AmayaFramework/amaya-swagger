@@ -16,12 +16,14 @@ public interface SwaggerConfigurer extends Resettable {
 
     /**
      * TODO
+     *
      * @return
      */
     CompressNegotiatorConfigurer negotiatorConfigurer(); // если неготиатора не будет, будет использован конфигуратор
 
     /**
      * TODO
+     *
      * @param action
      * @return
      */
@@ -29,12 +31,14 @@ public interface SwaggerConfigurer extends Resettable {
 
     /**
      * TODO
+     *
      * @return
      */
     CompressNegotiator negotiator(); // если задан, то конфигуратор игнорируется
 
     /**
      * TODO
+     *
      * @param negotiator
      * @return
      */
@@ -42,12 +46,14 @@ public interface SwaggerConfigurer extends Resettable {
 
     /**
      * TODO
+     *
      * @return
      */
     OpenUiFactory uiFactory();
 
     /**
      * TODO
+     *
      * @param factory
      * @return
      */
@@ -55,12 +61,14 @@ public interface SwaggerConfigurer extends Resettable {
 
     /**
      * TODO
+     *
      * @return
      */
     URI root();
 
     /**
      * TODO
+     *
      * @param root
      * @return
      */
@@ -68,12 +76,14 @@ public interface SwaggerConfigurer extends Resettable {
 
     /**
      * TODO
+     *
      * @return
      */
     Collection<OpenApiSource> documents();
 
     /**
      * TODO
+     *
      * @param source
      * @return
      */
@@ -81,6 +91,7 @@ public interface SwaggerConfigurer extends Resettable {
 
     /**
      * TODO
+     *
      * @param sources
      * @return
      */
@@ -88,6 +99,7 @@ public interface SwaggerConfigurer extends Resettable {
 
     /**
      * TODO
+     *
      * @param sources
      * @return
      */
@@ -95,24 +107,33 @@ public interface SwaggerConfigurer extends Resettable {
 
     /**
      * TODO
+     *
      * @return
      */
     Collection<OpenApiSource> exposedDocuments();
 
     /**
      * TODO
+     *
      * @param source
      * @param charset
      * @return
      */
-    SwaggerConfigurer exposeDocument(OpenApiSource source, String charset);
+    SwaggerConfigurer exposeDocument(OpenApiSource source);
 
     /**
      * TODO
-     * @param source
+     *
+     * @param sources
      * @return
      */
-    default SwaggerConfigurer exposeDocument(OpenApiSource source) {
-        return exposeDocument(source, null);
-    }
+    SwaggerConfigurer exposeDocuments(OpenApiSource... sources);
+
+    /**
+     * TODO
+     *
+     * @param sources
+     * @return
+     */
+    SwaggerConfigurer exposeDocuments(Iterable<OpenApiSource> sources);
 }

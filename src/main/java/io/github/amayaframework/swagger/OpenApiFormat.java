@@ -6,8 +6,8 @@ import io.github.amayaframework.http.MimeType;
  * TODO
  */
 public enum OpenApiFormat {
-    YAML(MimeTypes.OPEN_API_YAML),
-    JSON(MimeTypes.OPEN_API_JSON);
+    YAML(SwaggerMimeTypes.OPEN_API_YAML),
+    JSON(SwaggerMimeTypes.OPEN_API_JSON);
 
     final MimeType type;
 
@@ -17,6 +17,7 @@ public enum OpenApiFormat {
 
     /**
      * TODO
+     *
      * @return
      */
     public MimeType type() {

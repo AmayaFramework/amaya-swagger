@@ -3,22 +3,22 @@ package io.github.amayaframework.swagger;
 import com.github.romanqed.jfunc.Exceptions;
 
 import java.net.URI;
-import java.net.URL;
 
 /**
  * TODO
  */
 public final class RemoteApiSource extends AbstractApiSource {
-    private final URL url;
+    private final InputStreamProvider provider;
 
     /**
      * TODO
+     *
      * @param uri
      * @param name
      */
     public RemoteApiSource(URI uri, String name) {
         super(uri, name);
-        this.url = Exceptions.silent(uri::toURL);
+        this.provider = Exceptions.silent(uri::toURL)::openStream;
     }
 
     @Override
@@ -27,7 +27,12 @@ public final class RemoteApiSource extends AbstractApiSource {
     }
 
     @Override
+    public String charset() {
+        return null;
+    }
+
+    @Override
     public InputStreamProvider provider() {
-        return url::openStream;
+        return provider;
     }
 }

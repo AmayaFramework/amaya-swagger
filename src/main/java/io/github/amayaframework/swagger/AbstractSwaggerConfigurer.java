@@ -8,6 +8,7 @@ import java.util.*;
 
 /**
  * TODO
+ *
  * @param <C>
  */
 public abstract class AbstractSwaggerConfigurer<C extends SwaggerConfigurer> implements SwaggerConfigurer {
@@ -16,7 +17,7 @@ public abstract class AbstractSwaggerConfigurer<C extends SwaggerConfigurer> imp
     protected URI root;
     protected List<OpenApiSource> documents;
     protected Collection<OpenApiSource> documentsView;
-    protected Map<OpenApiSource, String> exposed;
+    protected List<OpenApiSource> exposed;
     protected Collection<OpenApiSource> exposedView;
 
     /**
@@ -34,8 +35,8 @@ public abstract class AbstractSwaggerConfigurer<C extends SwaggerConfigurer> imp
      */
     protected void ensureExposed() {
         if (exposed == null) {
-            exposed = new HashMap<>();
-            exposedView = Collections.unmodifiableCollection(exposed.keySet());
+            exposed = new LinkedList<>();
+            exposedView = Collections.unmodifiableCollection(exposed);
         }
     }
 
@@ -144,17 +145,42 @@ public abstract class AbstractSwaggerConfigurer<C extends SwaggerConfigurer> imp
 
     @Override
     @SuppressWarnings("unchecked")
-    public C exposeDocument(OpenApiSource source, String charset) {
+    public C exposeDocument(OpenApiSource source) {
         Objects.requireNonNull(source);
         Objects.requireNonNull(source.format(), "TODO MSG");
         Objects.requireNonNull(source.provider(), "TODO MSG");
         ensureExposed();
-        exposed.put(source, charset);
+        exposed.add(source);
         return (C) this;
     }
 
     @Override
-    public C exposeDocument(OpenApiSource source) {
-        return exposeDocument(source, null);
+    @SuppressWarnings("unchecked")
+    public C exposeDocuments(OpenApiSource... sources) {
+        // noinspection DuplicatedCode
+        Objects.requireNonNull(sources);
+        ensureExposed();
+        for (var source : sources) {
+            if (source == null || source.format() == null || source.provider() == null) {
+                continue;
+            }
+            exposed.add(source);
+        }
+        return (C) this;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public C exposeDocuments(Iterable<OpenApiSource> sources) {
+        // noinspection DuplicatedCode
+        Objects.requireNonNull(sources);
+        ensureExposed();
+        for (var source : sources) {
+            if (source == null || source.format() == null || source.provider() == null) {
+                continue;
+            }
+            exposed.add(source);
+        }
+        return (C) this;
     }
 }

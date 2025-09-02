@@ -19,6 +19,7 @@ public final class SwaggerTaskBuilder extends AbstractSwaggerConfigurer<SwaggerT
 
     /**
      * TODO
+     *
      * @param defaultRoot
      */
     public SwaggerTaskBuilder(String defaultRoot) {
@@ -81,7 +82,7 @@ public final class SwaggerTaskBuilder extends AbstractSwaggerConfigurer<SwaggerT
             ret.addAll(documents);
         }
         if (exposed != null) {
-            ret.addAll(exposed.keySet());
+            ret.addAll(exposed);
         }
         return ret;
     }
@@ -122,10 +123,9 @@ public final class SwaggerTaskBuilder extends AbstractSwaggerConfigurer<SwaggerT
     private boolean collectExposed(String root, Map<String, Part> parts) {
         Map<String, Part> rooted = null;
         Map<String, Part> standalone = null;
-        for (var entry : exposed.entrySet()) {
-            var source = entry.getKey();
+        for (var source : exposed) {
             var uri = source.uri().getRawPath();
-            var part = DocumentPart.of(source, entry.getValue());
+            var part = DocumentPart.of(source);
             if (uri.charAt(0) == '/') {
                 if (standalone == null) {
                     standalone = new HashMap<>();
@@ -179,6 +179,7 @@ public final class SwaggerTaskBuilder extends AbstractSwaggerConfigurer<SwaggerT
 
     /**
      * TODO
+     *
      * @return
      */
     public TaskConsumer<HttpContext> build() {

@@ -2,10 +2,12 @@ package io.github.amayaframework.swagger;
 
 import com.github.romanqed.jfunc.Runnable1;
 import io.github.amayaframework.environment.Environment;
+import io.github.amayaframework.options.Key;
 import io.github.amayaframework.options.OptionSet;
 import io.github.amayaframework.web.WebApplication;
 
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 /**
  * TODO
@@ -24,6 +26,7 @@ public final class SwaggerApplicationConfigurer implements Runnable1<WebApplicat
 
     /**
      * TODO
+     *
      * @param defaultRoot
      * @param configure
      */
@@ -35,6 +38,7 @@ public final class SwaggerApplicationConfigurer implements Runnable1<WebApplicat
 
     /**
      * TODO
+     *
      * @param defaultRoot
      */
     public SwaggerApplicationConfigurer(String defaultRoot) {
@@ -43,6 +47,7 @@ public final class SwaggerApplicationConfigurer implements Runnable1<WebApplicat
 
     /**
      * TODO
+     *
      * @param configure
      */
     public SwaggerApplicationConfigurer(boolean configure) {
@@ -56,8 +61,16 @@ public final class SwaggerApplicationConfigurer implements Runnable1<WebApplicat
         this(DEFAULT_ROOT, false);
     }
 
+    private static <T> void configure(OptionSet set, Key<T> key, Consumer<T> cons) {
+        var value = set.get(key);
+        if (value != null) {
+            cons.accept(value);
+        }
+    }
+
     /**
      * TODO
+     *
      * @return
      */
     public SwaggerTaskBuilder getBuilder() {
@@ -66,14 +79,19 @@ public final class SwaggerApplicationConfigurer implements Runnable1<WebApplicat
 
     /**
      * TODO
+     *
      * @param options
      */
     public void configure(OptionSet options) {
-        // TODO Implement configure
+        configure(options, SwaggerOptions.UI_FACTORY, builder::uiFactory);
+        configure(options, SwaggerOptions.ROOT, builder::root);
+        configure(options, SwaggerOptions.COMPRESS_NEGOTIATOR, builder::negotiator);
+        configure(options, SwaggerOptions.DOCS, builder::addDocuments);
+        configure(options, SwaggerOptions.EXPOSED_DOCS, builder::exposeDocuments);
     }
 
     @Override
-    public void run(WebApplication app) throws Throwable {
+    public void run(WebApplication app) {
         if (configure) {
             var options = app.options().getGroup(SwaggerOptions.SWAGGER_GROUP);
             if (options != null) {

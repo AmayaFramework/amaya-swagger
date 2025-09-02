@@ -20,6 +20,7 @@ public final class ExtendedSwaggerTask extends AbstractSwaggerTask {
 
     /**
      * TODO
+     *
      * @param parts
      * @param root
      * @param negotiator
@@ -77,12 +78,11 @@ public final class ExtendedSwaggerTask extends AbstractSwaggerTask {
         // 4. If the path starts with the root => return 404
         if (path.startsWith(slashRoot)) {
             return Futures.run(() -> context.response().sendError(HttpCode.NOT_FOUND));
-        } else {
-            // 5. For all other cases, delegate to the next task since we cannot be 100% sure
-            //    whether the requested path belongs to Swagger or not
-            //    Example: /api/openapi.json => found, served
-            //             /api/openapi1.json => not found, passed to next task
-            return next.runAsync(context);
         }
+        // 5. For all other cases, delegate to the next task since we cannot be 100% sure
+        //    whether the requested path belongs to Swagger or not
+        //    Example: /api/openapi.json => found, served
+        //             /api/openapi1.json => not found, passed to next task
+        return next.runAsync(context);
     }
 }

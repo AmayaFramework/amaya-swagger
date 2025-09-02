@@ -2,7 +2,7 @@
  * TODO
  */
 module amayaframework.swagger {
-    // TODO REMOVE
+    // TODO REMOVE dev deps
     requires amayaframework.core;
     requires amayaframework.tomcat;
     requires amayaframework.swaggerui;

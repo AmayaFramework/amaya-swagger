@@ -14,6 +14,7 @@ public final class Swagger {
 
     /**
      * TODO
+     *
      * @param defaultRoot
      * @return
      */
@@ -23,6 +24,7 @@ public final class Swagger {
 
     /**
      * TODO
+     *
      * @return
      */
     public static SwaggerTaskBuilder taskBuilder() {
@@ -31,30 +33,33 @@ public final class Swagger {
 
     /**
      * TODO
+     *
      * @param defaultRoot
      * @param action
      * @return
      */
-    public static SwaggerApplicationConfigurer applicationConfigurer(String defaultRoot, BiConsumer<SwaggerConfigurer, Environment> action) {
+    public static SwaggerApplicationConfigurer configurer(String defaultRoot, BiConsumer<SwaggerConfigurer, Environment> action) {
         return new SwaggerApplicationConfigurer(defaultRoot, action);
     }
 
     /**
      * TODO
+     *
      * @param action
      * @return
      */
-    public static SwaggerApplicationConfigurer applicationConfigurer(BiConsumer<SwaggerConfigurer, Environment> action) {
+    public static SwaggerApplicationConfigurer configurer(BiConsumer<SwaggerConfigurer, Environment> action) {
         return new SwaggerApplicationConfigurer(SwaggerApplicationConfigurer.DEFAULT_ROOT, action);
     }
 
     /**
      * TODO
+     *
      * @param defaultRoot
      * @param action
      * @return
      */
-    public static SwaggerApplicationConfigurer applicationConfigurer(String defaultRoot, Consumer<SwaggerConfigurer> action) {
+    public static SwaggerApplicationConfigurer configurer(String defaultRoot, Consumer<SwaggerConfigurer> action) {
         var ret = new SwaggerApplicationConfigurer(defaultRoot, false);
         action.accept(ret.getBuilder());
         return ret;
@@ -62,18 +67,20 @@ public final class Swagger {
 
     /**
      * TODO
+     *
      * @param action
      * @return
      */
-    public static SwaggerApplicationConfigurer applicationConfigurer(Consumer<SwaggerConfigurer> action) {
-        return applicationConfigurer(SwaggerApplicationConfigurer.DEFAULT_ROOT, action);
+    public static SwaggerApplicationConfigurer configurer(Consumer<SwaggerConfigurer> action) {
+        return configurer(SwaggerApplicationConfigurer.DEFAULT_ROOT, action);
     }
 
     /**
      * TODO
+     *
      * @return
      */
-    public static SwaggerApplicationConfigurer applicationConfigurer() {
+    public static SwaggerApplicationConfigurer configurer() {
         return new SwaggerApplicationConfigurer(false);
     }
 }
