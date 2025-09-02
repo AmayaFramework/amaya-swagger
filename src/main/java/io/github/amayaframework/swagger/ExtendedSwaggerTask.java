@@ -11,7 +11,23 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * TODO
+ * Flexible {@link AbstractSwaggerTask} implementation for serving Swagger UI resources.
+ * <p>
+ * Unlike {@link StandardSwaggerTask}, which is tied to a root prefix and a fixed index part,
+ * this task looks up resources directly by their full path in a provided map.
+ * <p>
+ * Behavior:
+ * <ul>
+ *   <li>If the request path exactly matches the configured root, the client is redirected
+ *       to {@code root + '/'}.</li>
+ *   <li>If the request path matches a registered {@link Part}, that part is served.</li>
+ *   <li>If the request path starts with {@code root + '/'}, but no part exists,
+ *       the response is {@link HttpCode#NOT_FOUND}.</li>
+ *   <li>For all other paths, control is delegated to the {@code next} task, since it is
+ *       unclear whether the request belongs to Swagger or the rest of the application.</li>
+ * </ul>
+ * Both synchronous ({@link #run(HttpContext, Task)}) and asynchronous
+ * ({@link #runAsync(HttpContext, Task)}) execution are supported.
  */
 public final class ExtendedSwaggerTask extends AbstractSwaggerTask {
     private final Map<String, Part> parts;
@@ -19,11 +35,12 @@ public final class ExtendedSwaggerTask extends AbstractSwaggerTask {
     private final String slashRoot;
 
     /**
-     * TODO
+     * Creates a new extended Swagger task.
      *
-     * @param parts
-     * @param root
-     * @param negotiator
+     * @param parts      a map of full request paths to parts
+     *                   (e.g. {@code "/api/swagger-ui.css"} → CSS resource)
+     * @param root       the root path under which Swagger UI is mounted
+     * @param negotiator the compression negotiator to use for responses
      */
     public ExtendedSwaggerTask(Map<String, Part> parts, String root, CompressNegotiator negotiator) {
         super(negotiator);

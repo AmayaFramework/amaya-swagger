@@ -11,16 +11,33 @@ import java.util.*;
 import java.util.function.Consumer;
 
 /**
- * TODO
+ * Builder for creating Swagger tasks that serve Swagger UI
+ * and optionally expose OpenAPI documents.
+ * <p>
+ * This class extends {@link AbstractSwaggerConfigurer} to provide
+ * fluent configuration of negotiators, UI factory, root path, and
+ * OpenAPI sources. The resulting task can be used as a
+ * {@link TaskConsumer} in an application pipeline.
+ * <p>
+ * Key behaviors:
+ * <ul>
+ *   <li>If no {@link CompressNegotiator} is provided, a default one is built
+ *   using {@link GzipEncoder}, {@link DeflateEncoder}, and {@link IdentityEncoder}.</li>
+ *   <li>If sources are added via {@code add*}, they appear in Swagger UI only.</li>
+ *   <li>If sources are added via {@code expose*}, they are visible in Swagger UI
+ *   and also directly served by the module.</li>
+ *   <li>If any exposed source uses an absolute path (starting with {@code /}),
+ *   {@link ExtendedSwaggerTask} is used. Otherwise, {@link StandardSwaggerTask} is used.</li>
+ * </ul>
  */
 public final class SwaggerTaskBuilder extends AbstractSwaggerConfigurer<SwaggerTaskBuilder> {
     private final String defaultRoot;
     private CompressNegotiatorBuilder builder;
 
     /**
-     * TODO
+     * Creates a new builder with the given default root path.
      *
-     * @param defaultRoot
+     * @param defaultRoot the default root path under which Swagger is served
      */
     public SwaggerTaskBuilder(String defaultRoot) {
         this.defaultRoot = defaultRoot;
@@ -42,7 +59,7 @@ public final class SwaggerTaskBuilder extends AbstractSwaggerConfigurer<SwaggerT
 
     @Override
     public SwaggerTaskBuilder configureNegotiator(Consumer<CompressNegotiatorConfigurer> action) {
-        Objects.requireNonNull(action);
+        Objects.requireNonNull(action, "Configurator action must not be null");
         if (builder == null) {
             builder = new CompressNegotiatorBuilder();
         }
@@ -163,7 +180,7 @@ public final class SwaggerTaskBuilder extends AbstractSwaggerConfigurer<SwaggerT
 
     private TaskConsumer<HttpContext> doBuild() {
         if (uiFactory == null) {
-            throw new IllegalStateException("TODO MSG: ui factory должна быть не null");
+            throw new IllegalStateException("UI factory must not be null");
         }
         var root = buildRoot();
         var parts = new HashMap<String, Part>();
@@ -178,9 +195,13 @@ public final class SwaggerTaskBuilder extends AbstractSwaggerConfigurer<SwaggerT
     }
 
     /**
-     * TODO
+     * Builds a new {@link TaskConsumer} for serving Swagger UI and documents,
+     * based on the current configuration.
+     * <p>
+     * After building, this builder is reset to its initial state.
      *
-     * @return
+     * @return a new Swagger {@link TaskConsumer}
+     * @throws IllegalStateException if required properties (such as UI factory) are missing
      */
     public TaskConsumer<HttpContext> build() {
         try {

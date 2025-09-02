@@ -10,130 +10,163 @@ import java.util.Collection;
 import java.util.function.Consumer;
 
 /**
- * TODO
+ * Configuration contract for Swagger integration.
+ * <p>
+ * Provides methods for customizing:
+ * <ul>
+ *   <li>Compression negotiation ({@link CompressNegotiator} or its configurer).</li>
+ *   <li>UI factory ({@link OpenUiFactory}) for serving Swagger UI.</li>
+ *   <li>Root URI under which Swagger is exposed.</li>
+ *   <li>OpenAPI documents visible in Swagger UI and/or directly served by the module.</li>
+ * </ul>
+ * <p>
+ * Distinction between <b>add</b> and <b>expose</b>:
+ * <ul>
+ *   <li>{@code add*} – registers a document only for inclusion in Swagger UI.
+ *       The document itself must still be served by the application.</li>
+ *   <li>{@code expose*} – registers a document for inclusion in Swagger UI
+ *       <em>and</em> configures the module to serve the document itself.</li>
+ * </ul>
  */
 public interface SwaggerConfigurer extends Resettable {
 
     /**
-     * TODO
+     * Returns the configurer for building a {@link CompressNegotiator}.
+     * <p>
+     * Used if no negotiator is explicitly provided.
      *
-     * @return
+     * @return the negotiator configurer
      */
-    CompressNegotiatorConfigurer negotiatorConfigurer(); // если неготиатора не будет, будет использован конфигуратор
+    CompressNegotiatorConfigurer negotiatorConfigurer();
 
     /**
-     * TODO
+     * Applies a customization to the negotiator configurer.
+     * <p>
+     * Has effect only if no explicit {@link CompressNegotiator} is set.
      *
-     * @param action
-     * @return
+     * @param action the customization action
+     * @return this configurer
      */
     SwaggerConfigurer configureNegotiator(Consumer<CompressNegotiatorConfigurer> action);
 
     /**
-     * TODO
+     * Returns the explicitly configured {@link CompressNegotiator}, if any.
+     * <p>
+     * If present, the {@link #negotiatorConfigurer()} is ignored.
      *
-     * @return
+     * @return the negotiator, or {@code null} if not set
      */
-    CompressNegotiator negotiator(); // если задан, то конфигуратор игнорируется
+    CompressNegotiator negotiator();
 
     /**
-     * TODO
+     * Sets a custom {@link CompressNegotiator}.
+     * <p>
+     * If set, {@link #negotiatorConfigurer()} is ignored.
      *
-     * @param negotiator
-     * @return
+     * @param negotiator the negotiator to use
+     * @return this configurer
      */
     SwaggerConfigurer negotiator(CompressNegotiator negotiator);
 
     /**
-     * TODO
+     * Returns the {@link OpenUiFactory} used to create Swagger UI instances.
      *
-     * @return
+     * @return the UI factory
      */
     OpenUiFactory uiFactory();
 
     /**
-     * TODO
+     * Sets a custom {@link OpenUiFactory}.
      *
-     * @param factory
-     * @return
+     * @param factory the UI factory to use
+     * @return this configurer
      */
     SwaggerConfigurer uiFactory(OpenUiFactory factory);
 
     /**
-     * TODO
+     * Returns the root URI under which Swagger UI and documents are served.
      *
-     * @return
+     * @return the root URI
      */
     URI root();
 
     /**
-     * TODO
+     * Sets the root URI under which Swagger UI and documents are served.
      *
-     * @param root
-     * @return
+     * @param root the root URI
+     * @return this configurer
      */
     SwaggerConfigurer root(URI root);
 
     /**
-     * TODO
+     * Returns all documents registered for Swagger UI (added via
+     * {@link #addDocument(OpenApiSource)} or {@link #exposeDocument(OpenApiSource)}).
      *
-     * @return
+     * @return the registered documents
      */
     Collection<OpenApiSource> documents();
 
     /**
-     * TODO
+     * Adds a new {@link OpenApiSource} for inclusion in Swagger UI.
+     * <p>
+     * The document will be visible in the UI, but the module will not serve it.
+     * The application is responsible for exposing the document at the given URI.
      *
-     * @param source
-     * @return
+     * @param source the source to add
+     * @return this configurer
      */
     SwaggerConfigurer addDocument(OpenApiSource source);
 
     /**
-     * TODO
+     * Adds multiple {@link OpenApiSource} documents to the configuration.
      *
-     * @param sources
-     * @return
+     * @param sources the sources to add
+     * @return this configurer
      */
     SwaggerConfigurer addDocuments(OpenApiSource... sources);
 
     /**
-     * TODO
+     * Adds multiple {@link OpenApiSource} documents to the configuration.
      *
-     * @param sources
-     * @return
+     * @param sources the sources to add
+     * @return this configurer
      */
     SwaggerConfigurer addDocuments(Iterable<OpenApiSource> sources);
 
     /**
-     * TODO
+     * Returns the collection of documents marked for exposure.
+     * <p>
+     * These documents are visible in Swagger UI <em>and</em> are
+     * served directly by the module.
      *
-     * @return
+     * @return the exposed documents
      */
     Collection<OpenApiSource> exposedDocuments();
 
     /**
-     * TODO
+     * Exposes a document for Swagger UI and configures the module
+     * to serve it directly.
      *
-     * @param source
-     * @param charset
-     * @return
+     * @param source the document source
+     * @return this configurer
      */
     SwaggerConfigurer exposeDocument(OpenApiSource source);
 
     /**
-     * TODO
+     * Exposes multiple documents for Swagger UI and configures the module
+     * to serve them directly.
      *
-     * @param sources
-     * @return
+     * @param sources the documents to expose
+     * @return this configurer
      */
     SwaggerConfigurer exposeDocuments(OpenApiSource... sources);
 
     /**
-     * TODO
+     * Exposes multiple documents for Swagger UI and configures the module
+     * to serve them directly.
      *
-     * @param sources
-     * @return
+     * @param sources the documents to expose
+     * @return this configurer
      */
     SwaggerConfigurer exposeDocuments(Iterable<OpenApiSource> sources);
 }

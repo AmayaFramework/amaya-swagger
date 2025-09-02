@@ -3,42 +3,48 @@ package io.github.amayaframework.swagger;
 import java.net.URI;
 
 /**
- * TODO
+ * Represents a source of an OpenAPI specification document.
+ * <p>
+ * Implementations may provide metadata such as name, format,
+ * charset, and a way to get the raw document stream.
  */
 public interface OpenApiSource {
 
     /**
-     * TODO
+     * Returns the URI of the OpenAPI document.
      *
-     * @return
+     * @return the document URI
      */
     URI uri();
 
     /**
-     * TODO
+     * Returns a human-readable name of this source.
      *
-     * @return
+     * @return the source name
      */
     String name();
 
     /**
-     * TODO
+     * Returns the format of the OpenAPI document
+     * (e.g. {@link OpenApiFormat#YAML} or {@link OpenApiFormat#JSON}).
      *
-     * @return
+     * @return the document format
      */
     OpenApiFormat format();
 
     /**
-     * TODO
+     * Returns the character set used to encode the document,
+     * or {@code null} if unspecified.
      *
-     * @return
+     * @return the charset, or {@code null}
      */
     String charset();
 
     /**
-     * TODO
+     * Returns a provider capable of supplying an input stream
+     * for reading the OpenAPI document.
      *
-     * @return
+     * @return the input stream provider
      */
     InputStreamProvider provider();
 }

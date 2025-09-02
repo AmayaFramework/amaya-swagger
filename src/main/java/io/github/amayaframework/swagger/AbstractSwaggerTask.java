@@ -19,7 +19,16 @@ import java.io.OutputStream;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * TODO
+ * Base implementation of a Swagger-related {@link TaskConsumer} that provides
+ * utilities for serving {@link Part} resources over HTTP with optional compression.
+ * <p>
+ * This class integrates a {@link CompressNegotiator} for handling
+ * {@code Accept-Encoding} negotiation and provides both synchronous and
+ * asynchronous methods for sending parts to an {@link HttpResponse}.
+ * It also offers helpers for constructing MIME metadata and handling redirects.
+ * <p>
+ * Subclasses implement application-specific logic, while this base
+ * class centralizes common behaviors for serving Swagger UI resources.
  */
 public abstract class AbstractSwaggerTask implements TaskConsumer<HttpContext> {
     protected static final String ACCEPT_ENCODING = "Accept-Encoding";
@@ -28,19 +37,24 @@ public abstract class AbstractSwaggerTask implements TaskConsumer<HttpContext> {
     protected final CompressNegotiator negotiator;
 
     /**
-     * TODO
+     * Creates a new Swagger task with the given compression negotiator.
      *
-     * @param negotiator
+     * @param negotiator the negotiator used to select a suitable
+     *                   {@link CompressEncoder} based on client
+     *                   {@code Accept-Encoding} headers
      */
     protected AbstractSwaggerTask(CompressNegotiator negotiator) {
         this.negotiator = negotiator;
     }
 
     /**
-     * TODO
+     * Builds a {@link MimeData} instance from the given {@link Part}.
+     * <p>
+     * If the part is textual and provides a charset, the charset is added
+     * as a parameter to the MIME data.
      *
-     * @param part
-     * @return
+     * @param part the resource part
+     * @return a {@link MimeData} instance for the part
      */
     protected static MimeData getMimeData(Part part) {
         var type = part.mimeType();
@@ -52,12 +66,12 @@ public abstract class AbstractSwaggerTask implements TaskConsumer<HttpContext> {
     }
 
     /**
-     * TODO
+     * Sends the given part synchronously to the client.
      *
-     * @param res
-     * @param encoder
-     * @param part
-     * @throws IOException
+     * @param res     the HTTP response
+     * @param encoder the encoder to apply, or {@code null} for identity
+     * @param part    the resource part to send
+     * @throws IOException if an I/O error occurs
      */
     protected static void sendPart(HttpResponse res, CompressEncoder encoder, Part part) throws IOException {
         res.mimeData(getMimeData(part));
@@ -74,11 +88,13 @@ public abstract class AbstractSwaggerTask implements TaskConsumer<HttpContext> {
     }
 
     /**
-     * TODO
+     * Sends the given part asynchronously to the provided stream.
+     * <p>
+     * The stream is closed upon completion.
      *
-     * @param stream
-     * @param part
-     * @return
+     * @param stream the output stream to write to
+     * @param part   the resource part to send
+     * @return a {@link CompletableFuture} representing the asynchronous transfer
      */
     protected static CompletableFuture<Void> sendPartAsync(OutputStream stream, Part part) {
         return Futures.run(() -> {
@@ -91,13 +107,13 @@ public abstract class AbstractSwaggerTask implements TaskConsumer<HttpContext> {
     }
 
     /**
-     * TODO
+     * Sends the given part asynchronously to the client.
      *
-     * @param res
-     * @param encoder
-     * @param part
-     * @return
-     * @throws IOException
+     * @param res     the HTTP response
+     * @param encoder the encoder to apply, or {@code null} for identity
+     * @param part    the resource part to send
+     * @return a {@link CompletableFuture} representing the asynchronous transfer
+     * @throws IOException if an I/O error occurs
      */
     protected static CompletableFuture<Void> sendPartAsync(HttpResponse res, CompressEncoder encoder, Part part) throws IOException {
         res.mimeData(getMimeData(part));
@@ -110,10 +126,13 @@ public abstract class AbstractSwaggerTask implements TaskConsumer<HttpContext> {
     }
 
     /**
-     * TODO
+     * Sets a permanent redirect response to the specified URL.
+     * <p>
+     * Uses {@link HttpCode#MOVED_PERMANENTLY} for HTTP/1.0 clients
+     * and {@link HttpCode#PERMANENT_REDIRECT} for HTTP/1.1 or later.
      *
-     * @param res
-     * @param url
+     * @param res the HTTP response
+     * @param url the target URL
      */
     protected static void redirect(HttpResponse res, String url) {
         if (res.httpVersion().before(HttpVersion.HTTP_1_1)) {
@@ -125,12 +144,16 @@ public abstract class AbstractSwaggerTask implements TaskConsumer<HttpContext> {
     }
 
     /**
-     * TODO
+     * Sends the given part synchronously, negotiating compression
+     * using the request's {@code Accept-Encoding} header.
+     * <p>
+     * If no acceptable encoding is found, responds with
+     * {@link HttpCode#NOT_ACCEPTABLE}.
      *
-     * @param req
-     * @param res
-     * @param part
-     * @throws IOException
+     * @param req  the HTTP request
+     * @param res  the HTTP response
+     * @param part the resource part to send
+     * @throws IOException if an I/O error occurs
      */
     protected void sendPart(HttpRequest req, HttpResponse res, Part part) throws IOException {
         var encoder = negotiator.negotiate(req.header(ACCEPT_ENCODING));
@@ -143,12 +166,16 @@ public abstract class AbstractSwaggerTask implements TaskConsumer<HttpContext> {
     }
 
     /**
-     * TODO
+     * Sends the given part asynchronously, negotiating compression
+     * using the request's {@code Accept-Encoding} header.
+     * <p>
+     * If no acceptable encoding is found, responds with
+     * {@link HttpCode#NOT_ACCEPTABLE} and returns a completed future.
      *
-     * @param req
-     * @param res
-     * @param part
-     * @return
+     * @param req  the HTTP request
+     * @param res  the HTTP response
+     * @param part the resource part to send
+     * @return a {@link CompletableFuture} representing the asynchronous transfer
      */
     protected CompletableFuture<Void> sendPartAsync(HttpRequest req, HttpResponse res, Part part) {
         var encoder = negotiator.negotiate(req.header(ACCEPT_ENCODING));

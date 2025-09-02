@@ -11,7 +11,25 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * TODO
+ * Default {@link AbstractSwaggerTask} implementation for serving Swagger UI resources.
+ * <p>
+ * This task handles requests under a configured root path, serving static
+ * {@link Part} resources such as HTML, CSS, and JavaScript that make up
+ * the Swagger UI frontend.
+ * <p>
+ * Behavior:
+ * <ul>
+ *   <li>If the request path is shorter than or does not start with the configured root,
+ *       control is delegated to the {@code next} task.</li>
+ *   <li>If the request path exactly matches the root, the client is redirected to
+ *       {@code root + '/'}.</li>
+ *   <li>If the request path is {@code root + '/'}, the configured index {@link Part}
+ *       is served.</li>
+ *   <li>If the request path corresponds to a known part, that part is served.</li>
+ *   <li>Otherwise, the response is {@link HttpCode#NOT_FOUND}.</li>
+ * </ul>
+ * Both synchronous ({@link #run(HttpContext, Task)}) and asynchronous
+ * ({@link #runAsync(HttpContext, Task)}) execution are supported.
  */
 public final class StandardSwaggerTask extends AbstractSwaggerTask {
     private final Map<String, Part> parts;
@@ -21,12 +39,12 @@ public final class StandardSwaggerTask extends AbstractSwaggerTask {
     private final int rootLength;
 
     /**
-     * TODO
+     * Creates a new Swagger UI serving task.
      *
-     * @param parts
-     * @param index
-     * @param root
-     * @param negotiator
+     * @param parts      a map of resource names to parts (e.g. CSS, JS, icons)
+     * @param index      the index page part (usually {@code index.html})
+     * @param root       the root path under which Swagger UI is mounted
+     * @param negotiator the compression negotiator to use for responses
      */
     public StandardSwaggerTask(Map<String, Part> parts, Part index, String root, CompressNegotiator negotiator) {
         super(negotiator);

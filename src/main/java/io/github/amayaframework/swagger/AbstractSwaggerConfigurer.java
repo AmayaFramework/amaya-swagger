@@ -7,9 +7,14 @@ import java.net.URI;
 import java.util.*;
 
 /**
- * TODO
+ * Base implementation of {@link SwaggerConfigurer}.
+ * <p>
+ * Provides storage and default handling for negotiator, UI factory,
+ * root URI, and collections of OpenAPI documents.
+ * <p>
+ * Subclasses may extend this class to implement custom configuration logic.
  *
- * @param <C>
+ * @param <C> the self type for fluent method chaining
  */
 public abstract class AbstractSwaggerConfigurer<C extends SwaggerConfigurer> implements SwaggerConfigurer {
     protected CompressNegotiator negotiator;
@@ -21,7 +26,7 @@ public abstract class AbstractSwaggerConfigurer<C extends SwaggerConfigurer> imp
     protected Collection<OpenApiSource> exposedView;
 
     /**
-     * TODO
+     * Ensures that the documents collection is initialized.
      */
     protected void ensureDocuments() {
         if (documents == null) {
@@ -31,7 +36,7 @@ public abstract class AbstractSwaggerConfigurer<C extends SwaggerConfigurer> imp
     }
 
     /**
-     * TODO
+     * Ensures that the exposed documents collection is initialized.
      */
     protected void ensureExposed() {
         if (exposed == null) {
@@ -88,7 +93,7 @@ public abstract class AbstractSwaggerConfigurer<C extends SwaggerConfigurer> imp
             return (C) this;
         }
         if (root.isAbsolute()) {
-            throw new IllegalArgumentException("TODO MSG: swagger root не может быть абсолютным");
+            throw new IllegalArgumentException("Swagger root must not be an absolute URI: " + root);
         }
         this.root = root;
         return (C) this;
@@ -103,7 +108,7 @@ public abstract class AbstractSwaggerConfigurer<C extends SwaggerConfigurer> imp
     @Override
     @SuppressWarnings("unchecked")
     public C addDocument(OpenApiSource source) {
-        Objects.requireNonNull(source);
+        Objects.requireNonNull(source, "OpenApiSource must not be null");
         ensureDocuments();
         documents.add(source);
         return (C) this;
@@ -112,7 +117,7 @@ public abstract class AbstractSwaggerConfigurer<C extends SwaggerConfigurer> imp
     @Override
     @SuppressWarnings("unchecked")
     public C addDocuments(OpenApiSource... sources) {
-        Objects.requireNonNull(sources);
+        Objects.requireNonNull(sources, "Sources array must not be null");
         ensureDocuments();
         for (var source : sources) {
             if (source == null) {
@@ -126,7 +131,7 @@ public abstract class AbstractSwaggerConfigurer<C extends SwaggerConfigurer> imp
     @Override
     @SuppressWarnings("unchecked")
     public C addDocuments(Iterable<OpenApiSource> sources) {
-        Objects.requireNonNull(sources);
+        Objects.requireNonNull(sources, "Sources iterable must not be null");
         ensureDocuments();
         for (var source : sources) {
             if (source == null) {
@@ -146,9 +151,9 @@ public abstract class AbstractSwaggerConfigurer<C extends SwaggerConfigurer> imp
     @Override
     @SuppressWarnings("unchecked")
     public C exposeDocument(OpenApiSource source) {
-        Objects.requireNonNull(source);
-        Objects.requireNonNull(source.format(), "TODO MSG");
-        Objects.requireNonNull(source.provider(), "TODO MSG");
+        Objects.requireNonNull(source, "OpenApiSource must not be null");
+        Objects.requireNonNull(source.format(), "Exposed OpenApiSource must have a non-null format");
+        Objects.requireNonNull(source.provider(), "Exposed OpenApiSource must have a non-null provider");
         ensureExposed();
         exposed.add(source);
         return (C) this;
@@ -157,8 +162,8 @@ public abstract class AbstractSwaggerConfigurer<C extends SwaggerConfigurer> imp
     @Override
     @SuppressWarnings("unchecked")
     public C exposeDocuments(OpenApiSource... sources) {
+        Objects.requireNonNull(sources, "Sources array must not be null");
         // noinspection DuplicatedCode
-        Objects.requireNonNull(sources);
         ensureExposed();
         for (var source : sources) {
             if (source == null || source.format() == null || source.provider() == null) {
@@ -172,8 +177,8 @@ public abstract class AbstractSwaggerConfigurer<C extends SwaggerConfigurer> imp
     @Override
     @SuppressWarnings("unchecked")
     public C exposeDocuments(Iterable<OpenApiSource> sources) {
+        Objects.requireNonNull(sources, "Sources iterable must not be null");
         // noinspection DuplicatedCode
-        Objects.requireNonNull(sources);
         ensureExposed();
         for (var source : sources) {
             if (source == null || source.format() == null || source.provider() == null) {

@@ -10,10 +10,34 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 /**
- * TODO
+ * Application-level configurer for integrating Swagger into a {@link WebApplication}.
+ * <p>
+ * This class wires together {@link SwaggerTaskBuilder} with either:
+ * <ul>
+ *   <li>Options provided via {@link OptionSet} (when {@code configure = true}), or</li>
+ *   <li>A custom configuration action supplied as a {@link BiConsumer}.</li>
+ * </ul>
+ * <p>
+ * Typical usage:
+ * <pre>{@code
+ * // Use options-based configuration
+ * app.configurer().add(new SwaggerApplicationConfigurer(true));
+ *
+ * // Or programmatic configuration
+ * app.configurer().add(new SwaggerApplicationConfigurer(
+ *     (config, env) -> config
+ *         .uiFactory(new SwaggerUiFactory())
+ *         .root(URI.create("/swagger"))
+ *         .exposeDocument(Sources.of("/openapi.yaml", "My API"))
+ * ));
+ * }</pre>
  */
 public final class SwaggerApplicationConfigurer implements Runnable1<WebApplication> {
+    /**
+     * Default root path for Swagger UI.
+     */
     public static final String DEFAULT_ROOT = "/swagger";
+
     private final SwaggerTaskBuilder builder;
     private final BiConsumer<SwaggerConfigurer, Environment> action;
     private final boolean configure;
@@ -25,10 +49,10 @@ public final class SwaggerApplicationConfigurer implements Runnable1<WebApplicat
     }
 
     /**
-     * TODO
+     * Creates a configurer that uses options-based configuration.
      *
-     * @param defaultRoot
-     * @param configure
+     * @param defaultRoot the default root path for Swagger UI
+     * @param configure   if {@code true}, reads settings from {@link OptionSet}
      */
     public SwaggerApplicationConfigurer(String defaultRoot, boolean configure) {
         this.builder = new SwaggerTaskBuilder(defaultRoot);
@@ -37,25 +61,27 @@ public final class SwaggerApplicationConfigurer implements Runnable1<WebApplicat
     }
 
     /**
-     * TODO
+     * Creates a configurer with a custom default root.
      *
-     * @param defaultRoot
+     * @param defaultRoot the default root path for Swagger UI
      */
     public SwaggerApplicationConfigurer(String defaultRoot) {
         this(defaultRoot, false);
     }
 
     /**
-     * TODO
+     * Creates a configurer that optionally uses options-based configuration.
      *
-     * @param configure
+     * @param configure if {@code true}, reads settings from {@link OptionSet}
      */
     public SwaggerApplicationConfigurer(boolean configure) {
         this(DEFAULT_ROOT, configure);
     }
 
     /**
-     * TODO
+     * Creates a configurer with the default root ({@code /swagger}).
+     * <p>
+     * Does not use options-based configuration.
      */
     public SwaggerApplicationConfigurer() {
         this(DEFAULT_ROOT, false);
@@ -69,25 +95,33 @@ public final class SwaggerApplicationConfigurer implements Runnable1<WebApplicat
     }
 
     /**
-     * TODO
+     * Returns the underlying {@link SwaggerTaskBuilder}.
      *
-     * @return
+     * @return the task builder
      */
     public SwaggerTaskBuilder getBuilder() {
         return builder;
     }
 
     /**
-     * TODO
+     * Applies configuration from the given {@link OptionSet}.
      *
-     * @param options
+     * @param options the options to apply
      */
     public void configure(OptionSet options) {
         configure(options, SwaggerOptions.UI_FACTORY, builder::uiFactory);
         configure(options, SwaggerOptions.ROOT, builder::root);
-        configure(options, SwaggerOptions.COMPRESS_NEGOTIATOR, builder::negotiator);
         configure(options, SwaggerOptions.DOCS, builder::addDocuments);
         configure(options, SwaggerOptions.EXPOSED_DOCS, builder::exposeDocuments);
+        var negotiator = options.get(SwaggerOptions.COMPRESS_NEGOTIATOR);
+        if (negotiator != null) {
+            builder.negotiator(negotiator);
+            return;
+        }
+        var configurer = options.get(SwaggerOptions.COMPRESS_NEGOTIATOR_CONFIGURER);
+        if (configurer != null) {
+            builder.configureNegotiator(configurer);
+        }
     }
 
     @Override
