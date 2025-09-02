@@ -27,12 +27,22 @@ dependencies {
     // Tests
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.10.0'
     testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.10.0'
-    // TODO Remove dep deps
-    implementation project(':compress') // TODO Implementation
-    implementation group: 'io.github.amayaframework', name: 'amaya-core', version: '3.4.0'
-    implementation group: 'io.github.amayaframework', name: 'amaya-tomcat', version: '3.1.0-10.1.44'
-    implementation project('openapi-ui-bundle') // TODO api
-    implementation project('swagger-ui-bundle') // TODO REMOVE
+    testImplementation group: 'io.github.amayaframework', name: 'amaya-core', version: '3.4.0'
+    // Open API bundle
+    api group: 'io.github.amayaframework', name: 'open-ui-bundle', version: '2.0.0'
+    // Compress module
+    api group: 'io.github.amayaframework', name: 'amaya-compress', version: '1.0.0'
+    // Servlets
+    compileOnly group: 'jakarta.servlet', name: 'jakarta.servlet-api', version: '6.0.0'
+    // Amaya modules
+    compileOnly group: 'io.github.amayaframework', name: 'amaya-options', version: '2.0.0'
+    compileOnly group: 'io.github.amayaframework', name: 'amaya-service', version: '2.0.0'
+    compileOnly group: 'io.github.amayaframework', name: 'amaya-http', version: '3.0.0'
+    compileOnly group: 'io.github.amayaframework', name: 'amaya-environment', version: '2.0.0'
+    compileOnly group: 'io.github.amayaframework', name: 'amaya-context', version: '3.0.1'
+    compileOnly group: 'io.github.amayaframework', name: 'amaya-server', version: '2.2.0'
+    compileOnly group: 'io.github.amayaframework', name: 'amaya-application', version: '2.0.0'
+    compileOnly group: 'io.github.amayaframework', name: 'amaya-web', version: '2.0.0'
 }
 
 test {

@@ -18,10 +18,6 @@
  * </ul>
  */
 module amayaframework.swagger {
-    // TODO REMOVE dev deps
-    requires amayaframework.core;
-    requires amayaframework.tomcat;
-    requires amayaframework.swaggerui;
     // Imports
     // Basic dependencies
     requires com.github.romanqed.jtype;
