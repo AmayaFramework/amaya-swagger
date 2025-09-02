@@ -3,41 +3,48 @@ package io.github.amayaframework.openui;
 import java.net.URI;
 
 /**
- * TODO
+ * Factory for creating {@link OpenUi} instances with one or more
+ * OpenAPI specification entries.
  */
 public interface OpenUiFactory {
 
     /**
-     * TODO
-     * @return
+     * Creates an {@link OpenUi} with a default configuration and no
+     * OpenAPI specification entries.
+     *
+     * @return a new {@link OpenUi}
      */
     OpenUi create();
 
     /**
-     * TODO
-     * @param uri
-     * @return
+     * Creates an {@link OpenUi} configured with a single specification.
+     *
+     * @param uri the URI of the OpenAPI definition
+     * @return a new {@link OpenUi}
      */
     OpenUi create(URI uri);
 
     /**
-     * TODO
-     * @param entry
-     * @return
+     * Creates an {@link OpenUi} configured with a single specification entry.
+     *
+     * @param entry the OpenAPI entry
+     * @return a new {@link OpenUi}
      */
     OpenUi create(OpenApiEntry entry);
 
     /**
-     * TODO
-     * @param entries
-     * @return
+     * Creates an {@link OpenUi} configured with multiple specification entries.
+     *
+     * @param entries the OpenAPI entries
+     * @return a new {@link OpenUi}
      */
     OpenUi create(OpenApiEntry... entries);
 
     /**
-     * TODO
-     * @param entries
-     * @return
+     * Creates an {@link OpenUi} configured with multiple specification entries.
+     *
+     * @param entries iterable collection of entries
+     * @return a new {@link OpenUi}
      */
     OpenUi create(Iterable<OpenApiEntry> entries);
 }

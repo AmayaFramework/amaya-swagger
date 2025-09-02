@@ -4,17 +4,19 @@ import java.net.URI;
 import java.util.Objects;
 
 /**
- * A class representing a reference to the OpenAPI manifest. Contains the url and name of the manifest.
+ * Represents a single OpenAPI specification entry that can be
+ * referenced by {@link OpenUi}. Each entry consists of a unique
+ * display name and the URI of the specification.
  */
 public final class OpenApiEntry {
     private final URI uri;
     private final String name;
 
     /**
-     * Constructs a {@link OpenApiEntry} instance with given uri and name.
+     * Creates a new entry for the given specification.
      *
-     * @param uri  the specified url
-     * @param name the specified name
+     * @param uri  the location of the OpenAPI definition
+     * @param name the display name of the entry
      */
     public OpenApiEntry(URI uri, String name) {
         this.uri = Objects.requireNonNull(uri);
@@ -22,29 +24,29 @@ public final class OpenApiEntry {
     }
 
     /**
-     * Creates a {@link OpenApiEntry} instance with given uri and name.
+     * Factory method for creating an entry.
      *
-     * @param uri  the specified uri
-     * @param name the specified name
-     * @return the {@link OpenApiEntry} instance
+     * @param uri  the location of the OpenAPI definition
+     * @param name the display name of the entry
+     * @return a new {@link OpenApiEntry} instance
      */
     public static OpenApiEntry of(URI uri, String name) {
         return new OpenApiEntry(uri, name);
     }
 
     /**
-     * Gets the api name.
+     * Returns the display name of this entry.
      *
-     * @return the api name
+     * @return the entry name
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Gets the api uri.
+     * Returns the URI of the OpenAPI definition.
      *
-     * @return the api uri
+     * @return the specification URI
      */
     public URI getURI() {
         return uri;

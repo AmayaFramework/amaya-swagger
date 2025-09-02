@@ -3,16 +3,18 @@ package io.github.amayaframework.openui;
 import io.github.amayaframework.http.MimeType;
 
 /**
- * TODO
+ * Base implementation of {@link Part} providing common
+ * storage and equality semantics for parts.
  */
 public abstract class AbstractPart implements Part {
     protected final String name;
     protected final MimeType type;
 
     /**
-     * TODO
-     * @param name
-     * @param type
+     * Constructs a part with the given name and MIME type.
+     *
+     * @param name the part name, must not be {@code null}
+     * @param type the MIME type, must not be {@code null}
      */
     protected AbstractPart(String name, MimeType type) {
         this.name = name;
