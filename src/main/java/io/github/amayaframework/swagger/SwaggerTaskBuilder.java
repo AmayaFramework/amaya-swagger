@@ -137,11 +137,20 @@ public final class SwaggerTaskBuilder extends AbstractSwaggerConfigurer<SwaggerT
         return PathUtil.normalize(root);
     }
 
+    private static String unrootUri(String root, String uri) {
+        var index = uri.indexOf(root);
+        if (index == 0) {
+            return uri.substring(root.length());
+        }
+        return uri;
+    }
+
     private boolean collectExposed(String root, Map<String, Part> parts) {
         Map<String, Part> rooted = null;
         Map<String, Part> standalone = null;
+        var slashRoot = root + '/';
         for (var source : exposed) {
-            var uri = source.uri().getRawPath();
+            var uri = unrootUri(slashRoot, source.uri().getRawPath());
             var part = DocumentPart.of(source);
             if (uri.charAt(0) == '/') {
                 if (standalone == null) {
