@@ -1,6 +1,6 @@
 # amaya-swagger [![amaya-swagger](https://img.shields.io/maven-central/v/io.github.amayaframework/amaya-swagger?color=blue)](https://repo1.maven.org/maven2/io/github/amayaframework/amaya-swagger)
 
-The amaya framework module that implements the standalone swagger SPA.
+The Amaya Framework module that integrates Swagger/OpenAPI document serving and UI support.
 
 ## Getting Started
 
@@ -8,93 +8,87 @@ To install it, you will need:
 
 * Java 11+
 * Maven/Gradle
-* Amaya Core or set of core modules
+* [amaya-core](https://github.com/AmayaFramework/amaya-core) **3.4.0+**
 
 ### Features
 
-* Providing a swagger-ui with all static files
-* Providing swagger manifests as static
-* Configurable static root of swagger-ui and other
+* Serving OpenAPI documents (JSON / YAML) with configurable roots
+* Automatic content negotiation and compression support
+* Integration with any `openui`-compatible UI module (e.g. Swagger UI or custom)
+* Configurable root path for UI and exposed documents
+* Simple fluent API for setup
 
 ## Installing
 
 ### Gradle dependency
 
-```Groovy
+```groovy
 dependencies {
-    implementation group: 'io.github.amayaframework', name: 'amaya-core', version: '2.0.2'
-    implementation group: 'io.github.amayaframework', name: 'amaya-swagger', version: '1.0.0'
-    // Optional dependency for swagger-ui impl
-    implementation group: 'io.github.amayaframework', name: 'swagger-ui-bundle', version: '1.0.4'
+    implementation group: 'io.github.amayaframework', name: 'amaya-core', version: '3.4.0'
+    implementation group: 'io.github.amayaframework', name: 'amaya-swagger', version: '2.0.0'
+    // choose any OpenUI implementation:
+    implementation group: 'io.github.amayaframework', name: 'swagger-ui-bundle', version: '2.0.0'
 }
 ```
 
 ### Maven dependency
 
+```xml
+<dependencies>
+    <dependency>
+        <groupId>io.github.amayaframework</groupId>
+        <artifactId>amaya-core</artifactId>
+        <version>3.4.0</version>
+    </dependency>
+    <dependency>
+        <groupId>io.github.amayaframework</groupId>
+        <artifactId>amaya-swagger</artifactId>
+        <version>2.0.0</version>
+    </dependency>
+    <!-- choose any OpenUI implementation -->
+    <dependency>
+        <groupId>io.github.amayaframework</groupId>
+        <artifactId>open-ui-bundle</artifactId>
+        <version>2.0.0</version>
+    </dependency>
+</dependencies>
 ```
-<dependency>
-    <groupId>io.github.amayaframework</groupId>
-    <artifactId>amaya-core</artifactId>
-    <version>2.0.2</version>
-</dependency>
-<dependency>
-    <groupId>io.github.amayaframework</groupId>
-    <artifactId>amaya-swagger</artifactId>
-    <version>1.0.0</version>
-</dependency>
-<!--Optional dependency for swagger-ui impl-->
-<dependency>
-    <groupId>io.github.amayaframework</groupId>
-    <artifactId>swagger-ui-bundle</artifactId>
-    <version>1.0.4</version>
-</dependency>
-```
 
-## Examples
+## Example
 
-### Petstore
-
-```Java
+```java
 import io.github.amayaframework.core.WebBuilders;
-import io.github.amayaframework.jetty.JettyServerFactory;
-import io.github.amayaframework.swagger.SwaggerConfigurers;
-import io.github.amayaframework.swagger.Documents;
 import io.github.amayaframework.swaggerui.SwaggerUiFactory;
 
-import java.net.URL;
-
 public class Main {
-
     public static void main(String[] args) throws Throwable {
-        var configurer = SwaggerConfigurers.create(new SwaggerUIFactory());
-        var petstore = Documents.of(new URL("https://petstore.swagger.io/v2/swagger.json"), "Petstore");
-        configurer.addDocument(petstore);
         var app = WebBuilders.create()
-                .setServerFactory(/* your web server factory here */)
-                .configureApplication(configurer)
+                .withServerFactory(/*your server factory*/)
+                .configureApplication(Swagger.configurer(cfg -> cfg
+                        .uiFactory(new SwaggerUiFactory())
+                        .root("/swagger")
+                        .addDocument(Sources.of("https://petstore.swagger.io/v2/swagger.json", "Petstore")))
+                )
                 .build();
         app.bind(8080);
         app.run();
     }
 }
-
 ```
 
-Run this code and open in browser `http://localhost:8080/swagger`. Then you see it:
-
-![img.png](img.png)
+Run and open http://localhost:8080/swagger to see Swagger UI with the Petstore API.
 
 ## Built With
 
-* [Gradle](https://gradle.org) - Dependency management
-* [jfunc](https://github.com/RomanQed/jfunc) - Basic functional interfaces
-* [amaya-core](https://github.com/AmayaFramework/amaya-core) - Various amaya modules
+* [Gradle](https://gradle.org) – build & dependency management
+* [amaya-core](https://github.com/AmayaFramework/amaya-core) – base Amaya modules
+* [openui](openapi-ui-bundle) – pluggable UI layer
 
 ## Authors
 
 * **[RomanQed](https://github.com/RomanQed)** - *Main work*
 
-See also the list of [contributors](https://github.com/AmayaFramework/amaya-jetty/contributors)
+See also the list of [contributors](https://github.com/AmayaFramework/amaya-swagger/contributors)
 who participated in this project.
 
 ## License

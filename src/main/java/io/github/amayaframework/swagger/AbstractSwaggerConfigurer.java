@@ -100,6 +100,11 @@ public abstract class AbstractSwaggerConfigurer<C extends SwaggerConfigurer> imp
     }
 
     @Override
+    public C root(String root) {
+        return root(URI.create(root));
+    }
+
+    @Override
     @SuppressWarnings("unchecked")
     public Collection<OpenApiSource> documents() {
         return documentsView == null ? Collections.EMPTY_LIST : documentsView;

@@ -99,6 +99,25 @@ public interface SwaggerConfigurer extends Resettable {
     SwaggerConfigurer root(URI root);
 
     /**
+     * Sets the root path (relative URI) where Swagger UI will be served.
+     * <p>
+     * This is a convenience overload that accepts a {@link String}
+     * and converts it into a {@link URI}.
+     * <p>
+     * Example:
+     * <pre>{@code
+     *   configurer.root("/swagger");
+     * }</pre>
+     *
+     * @param root the root path as a string (must not be absolute, e.g. "/swagger")
+     * @return this configurer for chaining
+     * @throws IllegalArgumentException if the given root string represents an absolute URI
+     */
+    default SwaggerConfigurer root(String root) {
+        return root(URI.create(root));
+    }
+
+    /**
      * Returns all documents registered for Swagger UI (added via
      * {@link #addDocument(OpenApiSource)} or {@link #exposeDocument(OpenApiSource)}).
      *
