@@ -27,9 +27,9 @@ dependencies {
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.10.0'
     testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.10.0'
     // Dependencies
-    implementation project(':openapi-ui-bundle')
+    compileOnly project(':openapi-ui-bundle')
     // Amaya Http
-    compileOnly group: 'io.github.amayaframework', name: 'amaya-http', version: '2.0.0'
+    compileOnly group: 'io.github.amayaframework', name: 'amaya-http', version: '3.0.0'
 }
 
 test {
