@@ -10,6 +10,7 @@ final class StringUtil {
     static final String MARKER = "//%";
     static final String MARKER_COMMA = MARKER + ',';
     static final String INIT_JS = "window.onload=function(){window.ui=SwaggerUIBundle({//%,dom_id:\"#swagger-ui\",deepLinking:!0,presets:[SwaggerUIBundle.presets.apis,SwaggerUIStandalonePreset],plugins:[SwaggerUIBundle.plugins.DownloadUrl],layout:\"StandaloneLayout\"})};";
+
     private StringUtil() {
     }
 
