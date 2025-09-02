@@ -13,7 +13,7 @@ import java.util.Map;
  *   <li>{@link MapCompressManager} for encoder storage</li>
  *   <li>{@link IdentityEncoder}, {@link GzipEncoder}, and {@link DeflateEncoder}
  *       as the default encoders</li>
- *   <li>{@link #DEFAULT_PRIORITIES default priorities} favoring Brotli > GZIP > Deflate > Identity</li>
+ *   <li>{@link #DEFAULT_PRIORITIES default priorities} favoring Brotli &gt; GZIP &gt; Deflate &gt; Identity</li>
  *   <li>{@link #DEFAULT_CACHE_LIMIT} as the maximum number of cached lookups</li>
  * </ul>
  * <p>

@@ -27,7 +27,7 @@ public final class CachedCompressNegotiator extends AbstractCompressNegotiator {
      * @param parser     the header parser
      * @param priority   optional priority overrides
      * @param cacheLimit maximum number of cached entries,
-     *                   or a value < 1 to disable caching
+     *                   or a value &lt; 1 to disable caching
      */
     public CachedCompressNegotiator(CompressManager manager,
                                     EncodingHeaderParser parser,
