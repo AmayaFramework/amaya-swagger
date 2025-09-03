@@ -58,7 +58,7 @@ public final class SwaggerTaskBuilder extends AbstractSwaggerConfigurer<SwaggerT
     }
 
     @Override
-    public SwaggerTaskBuilder configureNegotiator(Consumer<CompressNegotiatorConfigurer> action) {
+    public SwaggerTaskBuilder negotiator(Consumer<CompressNegotiatorConfigurer> action) {
         Objects.requireNonNull(action, "Configurator action must not be null");
         if (builder == null) {
             builder = new CompressNegotiatorBuilder();
