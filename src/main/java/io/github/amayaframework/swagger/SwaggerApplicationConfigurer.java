@@ -120,7 +120,7 @@ public final class SwaggerApplicationConfigurer implements Runnable1<WebApplicat
         }
         var configurer = options.get(SwaggerOptions.COMPRESS_NEGOTIATOR_CONFIGURER);
         if (configurer != null) {
-            builder.configureNegotiator(configurer);
+            builder.negotiator(configurer);
         }
     }
 

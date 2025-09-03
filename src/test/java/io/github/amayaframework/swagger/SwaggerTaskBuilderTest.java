@@ -169,7 +169,9 @@ public final class SwaggerTaskBuilderTest {
         var flag = new AtomicBoolean(false);
 
         var builder = new SwaggerTaskBuilder("/swagger").uiFactory(uiFactory);
-        builder.configureNegotiator(cfg -> flag.set(true));
+        builder.negotiator(cfg -> {
+            flag.set(true);
+        });
         var task = builder.build();
 
         assertTrue(flag.get());

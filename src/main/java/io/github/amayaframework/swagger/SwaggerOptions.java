@@ -45,8 +45,7 @@ public final class SwaggerOptions {
      * <p>
      * Equivalent to {@code addDocuments(...)}.
      */
-    public static final Key<Iterable<OpenApiSource>> DOCS = Key.of("docs", new JType<>() {
-    });
+    public static final Key<Iterable<OpenApiSource>> DOCS = Key.of("docs", new JType<>(){});
 
     /**
      * Key for registering OpenAPI documents that should be
@@ -54,8 +53,7 @@ public final class SwaggerOptions {
      * <p>
      * Equivalent to {@code exposeDocuments(...)}.
      */
-    public static final Key<Iterable<OpenApiSource>> EXPOSED_DOCS = Key.of("exposed_docs", new JType<>() {
-    });
+    public static final Key<Iterable<OpenApiSource>> EXPOSED_DOCS = Key.of("exposed_docs", new JType<>(){});
 
     /**
      * Key for providing a fully configured {@link CompressNegotiator}.
@@ -75,7 +73,6 @@ public final class SwaggerOptions {
      */
     public static final Key<Consumer<CompressNegotiatorConfigurer>> COMPRESS_NEGOTIATOR_CONFIGURER = Key.of(
             "compress_negotiator_cfg",
-            new JType<>() {
-            }
+            new JType<>(){}
     );
 }

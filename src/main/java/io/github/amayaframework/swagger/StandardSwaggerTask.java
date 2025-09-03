@@ -1,7 +1,6 @@
 package io.github.amayaframework.swagger;
 
 import com.github.romanqed.jconv.Task;
-import com.github.romanqed.jsync.Futures;
 import io.github.amayaframework.compress.CompressNegotiator;
 import io.github.amayaframework.context.HttpContext;
 import io.github.amayaframework.http.HttpCode;

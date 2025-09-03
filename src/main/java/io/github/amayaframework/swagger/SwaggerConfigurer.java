@@ -47,7 +47,7 @@ public interface SwaggerConfigurer extends Resettable {
      * @param action the customization action
      * @return this configurer
      */
-    SwaggerConfigurer configureNegotiator(Consumer<CompressNegotiatorConfigurer> action);
+    SwaggerConfigurer negotiator(Consumer<CompressNegotiatorConfigurer> action);
 
     /**
      * Returns the explicitly configured {@link CompressNegotiator}, if any.
