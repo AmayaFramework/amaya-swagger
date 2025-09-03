@@ -8,7 +8,7 @@ To install it, you will need:
 
 * Java 11+
 * Maven/Gradle
-* [amaya-core](https://github.com/AmayaFramework/amaya-core) **3.4.0+**
+* [amaya-core](https://github.com/AmayaFramework/amaya-core) **3.5.0+**
 
 ### Features
 
@@ -24,8 +24,8 @@ To install it, you will need:
 
 ```groovy
 dependencies {
-    implementation group: 'io.github.amayaframework', name: 'amaya-core', version: '3.4.0'
-    implementation group: 'io.github.amayaframework', name: 'amaya-swagger', version: '2.0.1'
+    implementation group: 'io.github.amayaframework', name: 'amaya-core', version: '3.5.0'
+    implementation group: 'io.github.amayaframework', name: 'amaya-swagger', version: '2.1.0'
     // choose any OpenUI implementation:
     implementation group: 'io.github.amayaframework', name: 'swagger-ui-bundle', version: '2.0.0'
 }
@@ -38,12 +38,12 @@ dependencies {
     <dependency>
         <groupId>io.github.amayaframework</groupId>
         <artifactId>amaya-core</artifactId>
-        <version>3.4.0</version>
+        <version>3.5.0</version>
     </dependency>
     <dependency>
         <groupId>io.github.amayaframework</groupId>
         <artifactId>amaya-swagger</artifactId>
-        <version>2.0.1</version>
+        <version>2.1.0</version>
     </dependency>
     <!-- choose any OpenUI implementation -->
     <dependency>
